@@ -12,7 +12,7 @@ class CursController extends Controller
      */
     public function index()
     {
-        //
+        ///
     }
 
     /**
