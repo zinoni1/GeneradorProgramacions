@@ -17,6 +17,7 @@ class TrimestreFactory extends Factory
     public function definition(): array
     {
         return [
+            'nom' => $this->faker->name,
             'data_inici' => $this->faker->date,
             'data_final' => $this->faker->date
         ];

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('trimestres', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('nom');
             $table->date('data_inici');
             $table->date('data_final');
             $table->foreignId('curs_id')

@@ -17,6 +17,7 @@ class FestiuFactory extends Factory
     public function definition(): array
     {
         return [
+            'nom' => $this->faker->word,
             'data_inici' => $this->faker->date,
             'data_final' => $this->faker->date,
             'tipus' => $this->faker->word
