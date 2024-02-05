@@ -12,7 +12,8 @@ class CursController extends Controller
      */
     public function index()
     {
-        ///
+        $curs = Curs::all();
+        return view('formulari');
     }
 
     /**
