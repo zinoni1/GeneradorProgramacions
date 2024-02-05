@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('festius', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('nom');
             $table->string('tipus');
             $table->date('data_inici');
             $table->date('data_final');

@@ -10,7 +10,7 @@ class Festiu extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['data_inici', 'data_final','tipus'];
+    protected $fillable = ['nom','data_inici', 'data_final','tipus'];
 
     public function curs()
     {

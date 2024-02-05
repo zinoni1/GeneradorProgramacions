@@ -11,7 +11,7 @@ class Trimestre extends Model
     use HasFactory;
 
 
-    protected $fillable = ['data_inici', 'data_final'];
+    protected $fillable = ['nom','data_inici', 'data_final'];
 
     public function curs()
     {
