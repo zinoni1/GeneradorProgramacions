@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Curs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class CursController extends Controller
 {
@@ -13,7 +15,13 @@ class CursController extends Controller
     public function index()
     {
         $curs = Curs::all();
-        return view('formulari');
+        if (Auth::check() && Auth::user()->name === 'admin') {
+            // Si cumple con los criterios de autorización, mostrar la vista 'curs'
+            return view('formulari');
+        } else {
+            // Si no cumple con los criterios, redireccionar a una página de error
+            return view('error');
+        }
     }
 
     /**

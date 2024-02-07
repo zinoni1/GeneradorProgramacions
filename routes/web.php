@@ -19,7 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//TODO El curs ha de estar validat amb auth y nomes pot admin
+//Route::resource('curs', CursController::class);
+
 Route::resource('curs', CursController::class);
+Route::resource('error', CursController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
