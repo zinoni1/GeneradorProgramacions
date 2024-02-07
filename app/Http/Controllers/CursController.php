@@ -24,7 +24,18 @@ class CursController extends Controller
         }
     }
 
-    /**
+    public function store(Request $request)
+    {
+        $curs = new Curs(); // Crear una nueva instancia del modelo Curs
+
+        // Asignar los valores recibidos del formulario
+        $curs->nom = $request->input('nom');
+        $curs->data_inici = $request->input('data_inici');
+        $curs->data_final = $request->input('data_final');
+
+        // Guardar el curso en la base de datos
+        $curs->save();
+    }/**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -35,10 +46,7 @@ class CursController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+
 
     /**
      * Display the specified resource.
