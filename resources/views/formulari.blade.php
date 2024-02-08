@@ -145,8 +145,6 @@ $("#addFestivo").click(function () {
         $("#addTrimestre").click(function () {
                 if (numTrimestre <= 3) {
 
-
-
                     for (var i = 0; i < numTrimestre; i++) {
   var trimestreName = "Trimestre " + (i + 1);
 
@@ -195,9 +193,14 @@ $("#addFestivo").click(function () {
 
 
             $(document).on("click", ".deleteTrimestre", function(){
-                $(this).closest('.trimestre').remove();
-                updateTrimestreNumbers();
-            });
+    $(this).closest('.trimestre').remove();
+    updateTrimestreNumbers();
+
+    var index = $(this).closest('.trimestre').index(); // Obtener el índice del trimestre eliminado
+    trimestres.splice(index, 1); // Eliminar el trimestre del array trimestres
+    $("#trimestresData").val(JSON.stringify(trimestres)); // Actualizar el valor del campo oculto con los trimestres actualizados
+});
+
 
             function updateTrimestreNumbers() {
                 var trimestres = $(".trimestre");
