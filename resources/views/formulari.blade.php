@@ -25,7 +25,7 @@
             <!-- Trimestres -->
             <div class="row mb-3" style="background-color: #f2f2f2; padding: 15px;">
                 <div class="col-md-4">
-                    <label for="numTrimestre" class="form-label">Numero de Trimestre 1</label>
+                    <label for="numTrimestre" class="form-label">Trimestres</label>
                     <input type="hidden" id="numTrimestre" name="numTrimestre" value="1">
                 </div>
                 <div class="col-md-4">
@@ -39,7 +39,7 @@
             </div>
             <div class="mb-3">
                 <button type="button" id="addTrimestre" class="btn btn-secondary">Agregar Trimestre</button>
-                <button type="button" id="toggleAllTrimestresBtn" class="btn btn-secondary">Mostrar/Esconder Todos los Trimestres</button>
+                <button type="button" id="toggleAllTrimestresBtn" class="btn btn-secondary"></button>
             </div>
             <div id="trimestresContainer"></div>
 
@@ -69,9 +69,13 @@
             </div>
             <div class="mb-3">
                 <button type="button" id="addFestivo" class="btn btn-secondary">Agregar Festivo</button>
-                <button type="button" id="toggleAllBtn" class="btn btn-secondary">Mostrar/Esconder Todos</button>
+                <button type="button" id="toggleAllBtn" class="btn btn-secondary"></button>
             </div>
             <div id="festivosContainer"></div>
+
+            <!--hidden trimestresData-->
+            <input type="hidden" id="trimestresData" name="trimestresData">
+            <input type="hidden" id="festiusData" name="festiusData">
 
             <!-- Botón de envío -->
             <button type="submit" class="btn btn-primary">Enviar</button>
@@ -81,18 +85,41 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
     $(document).ready(function(){
+        var festius = [];
 
-        $("#addFestivo").click(function () {
+var numFestiu = 1;
+
+$("#addFestivo").click(function () {
+
+  for (var i = 0; i < numFestiu; i++) {
+    var nombreFestivo = $("#nombreFestivo").val();
+    var tipoFestivo = $("#tipoFestivo").val();
+    var fechaInicioTrimestre = $("#fechaInicioFestivo").val();
+    var fechaFinalTrimestre = $("#fechaFinalFestivo").val();
+
+    var festiuData = {
+      nom: nombreFestivo,
+      tipus: tipoFestivo,
+      inicio: fechaInicioTrimestre,
+      fin: fechaFinalTrimestre
+    };
+    console.log(festiuData);
+  }
+    festius.push(festiuData);
             var nombreFestivo = $("#nombreFestivo").val(); // Obtener el valor del nombre del festivo
             var tipoFestivo = $("#tipoFestivo").val();
-            var newFestivo = $('<div>', {class: 'festivo'});
-            newFestivo.append('<h3>' + nombreFestivo + '</h3>'); // Agregar el nombre del festivo
-            newFestivo.append('<p><strong>Tipo de festiu:</strong> ' + tipoFestivo + '</p>');
-            newFestivo.append('<p><strong>Data inici:</strong> ' + $("#fechaInicioFestivo").val() + '</p>');
-            newFestivo.append('<p><strong>Data final:</strong> ' + $("#fechaFinalFestivo").val() + '</p>');
+            var fechaInicioFestivo = $("#fechaInicioFestivo").val(); // Obtener el valor de la fecha de inicio del festivo
+            var fechaFinalFestivo = $("#fechaFinalFestivo").val(); // Obtener el valor de la fecha final del festivo
+            $("#festiusData").val(JSON.stringify(festius));
+                    var newFestivo = $('<div>', {class: 'festivo'});
+                    newFestivo.append('<h3>' + nombreFestivo + '</h3>');
+                    newFestivo.append('<p><strong>Tipo de festiu:</strong> ' + tipoFestivo + '</p>');
+                    newFestivo.append('<p><strong>Data inici:</strong> ' + fechaInicioFestivo + '</p>');
+                    newFestivo.append('<p><strong>Data final:</strong> ' + fechaFinalFestivo + '</p>');
+
 
             $("#festivosContainer").append(newFestivo);
-
+            numFestiu++;
             if (!$("#toggleAllBtn").hasClass("active")) {
                 $(".festivo").slideDown();
                 $("#toggleAllBtn").addClass("active").text("-");
@@ -114,12 +141,32 @@
         });
 
         var numTrimestre = 1;
-
+  var trimestres = [];
         $("#addTrimestre").click(function () {
-                if (numTrimestre <= 3) { // Verificar si se han creado menos de 3 trimestres
+                if (numTrimestre <= 3) {
+
+
+
+                    for (var i = 0; i < numTrimestre; i++) {
+  var trimestreName = "Trimestre " + (i + 1);
+
+  var fechaInicioTrimestre = $("#fechaInicioTrimestre").val(); // Obtener el valor de la fecha de inicio del trimestre
+  var fechaFinalTrimestre = $("#fechaFinalTrimestre").val(); // Obtener el valor de la fecha final del trimestre
+
+  var trimestreData = {
+    nom: trimestreName,
+    inicio: fechaInicioTrimestre,
+    fin: fechaFinalTrimestre
+  };
+
+}
+  trimestres.push(trimestreData);
+
+
                     var fechaInicioTrimestre = $("#fechaInicioTrimestre").val();
                     var fechaFinalTrimestre = $("#fechaFinalTrimestre").val();
 
+        $("#trimestresData").val(JSON.stringify(trimestres));
                     var newTrimestre = $('<div>', {class: 'trimestre'});
                     newTrimestre.append('<h3>Trimestre ' + numTrimestre + '</h3>');
                     newTrimestre.append('<p><strong>Fecha de inicio:</strong> ' + fechaInicioTrimestre + '</p>');
@@ -137,10 +184,15 @@
                     if ($("#trimestresContainer").children().length === 1) {
                         $("#toggleAllTrimestresBtn").show();
                     }
+
                 } else {
                     alert("Ya has alcanzado el máximo de trimestres permitidos (3).");
                 }
+
             });
+
+
+
 
             $(document).on("click", ".deleteTrimestre", function(){
                 $(this).closest('.trimestre').remove();
