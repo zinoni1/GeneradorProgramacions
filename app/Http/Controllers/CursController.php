@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Curs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Trimestre;
+use App\Models\Festiu;
 
 
 class CursController extends Controller
@@ -26,16 +28,47 @@ class CursController extends Controller
 
     public function store(Request $request)
     {
-        $curs = new Curs(); // Crear una nueva instancia del modelo Curs
+        // Verificar si el campo 'nom' está presente en la solicitud
+        if ($request->has('nom')) {
+            $curs = new Curs(); // Crear una nueva instancia del modelo Curs
 
-        // Asignar los valores recibidos del formulario
-        $curs->nom = $request->input('nom');
-        $curs->data_inici = $request->input('data_inici');
-        $curs->data_final = $request->input('data_final');
+            // Asignar los valores recibidos del formulario
+            $curs->nom = $request->input('nom');
+            $curs->data_inici = $request->input('data_inici');
+            $curs->data_final = $request->input('data_final');
 
-        // Guardar el curso en la base de datos
-        $curs->save();
-    }/**
+            // Guardar el curso en la base de datos
+            $curs->save();
+
+            // Guardar los trimestres asociados al curso
+            $trimestresData = json_decode($request->input('trimestresData'), true);
+            if (!empty($trimestresData)) {
+                foreach ($trimestresData as $trimestreData) {
+                    $trimestre = new Trimestre();
+                    $trimestre->nom = $trimestreData['nom'];
+                    $trimestre->data_inici = $trimestreData['inicio'];
+                    $trimestre->data_final = $trimestreData['fin'];
+                    $trimestre->curs_id = $curs->id; // Asignar el id del curso
+                    $trimestre->save();
+                }
+            }
+
+
+        }
+            $festiusData = json_decode($request->input('festiusData'), true);
+            if (!empty($festiusData)) {
+              foreach ($festiusData as $festiuData) {
+                $festiu = new Festiu();
+                $festiu->nom = $festiuData['nom'];
+                $festiu->data_inici = $festiuData['inicio'];
+                $festiu->data_final = $festiuData['fin'];
+                $festiu->tipus = $festiuData['tipus'];
+                $festiu->curs_id = $curs->id;
+                $festiu->save();
+              }
+            }
+    }
+/**
      * Show the form for creating a new resource.
      */
     public function create()
