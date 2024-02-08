@@ -10,15 +10,15 @@
             <div class="row mb-3" style="background-color: #f7f7f7; padding: 15px;">
                 <div class="col-md-4">
                     <label for="nom" class="form-label">Nombre del curso</label>
-                    <input type="text" class="form-control" id="nom" name="nom">
+                    <input type="text" class="form-control" id="nom" name="nom" required>
                 </div>
                 <div class="col-md-4">
                     <label for="data_inici" class="form-label">Fecha de inicio del curso</label>
-                    <input type="date" class="form-control" id="data_inici" name="data_inici">
+                    <input type="date" class="form-control" id="data_inici" name="data_inici" required>
                 </div>
                 <div class="col-md-4">
                     <label for="data_final" class="form-label">Fecha final del curso</label>
-                    <input type="date" class="form-control" id="data_final" name="data_final">
+                    <input type="date" class="form-control" id="data_final" name="data_final" required>
                 </div>
             </div>
 
@@ -30,11 +30,11 @@
                 </div>
                 <div class="col-md-4">
                     <label for="fechaInicioTrimestre" class="form-label">Fecha de inicio Trimestre</label>
-                    <input type="date" class="form-control" id="fechaInicioTrimestre" name="fechaInicioTrimestre">
+                    <input type="date" class="form-control" id="fechaInicioTrimestre" name="fechaInicioTrimestre" required>
                 </div>
                 <div class="col-md-4">
                     <label for="fechaFinalTrimestre" class="form-label">Fecha final Trimestre</label>
-                    <input type="date" class="form-control" id="fechaFinalTrimestre" name="fechaFinalTrimestre">
+                    <input type="date" class="form-control" id="fechaFinalTrimestre" name="fechaFinalTrimestre" required>
                 </div>
             </div>
             <div class="mb-3">
@@ -47,7 +47,7 @@
             <div class="row mb-3" style="background-color: #eaeaea; padding: 15px;">
                 <div class="col-md-4">
                     <label for="nombreFestivo" class="form-label">Nombre del Festivo</label>
-                    <input type="text" class="form-control" id="nombreFestivo" name="nombreFestivo">
+                    <input type="text" class="form-control" id="nombreFestivo" name="nombreFestivo" required>
                 </div>
                 <div class="col-md-4">
                     <label for="tipoFestivo" class="form-label">Tipo de Festivo</label>
@@ -60,11 +60,11 @@
                 </div>
                 <div class="col-md-4">
                     <label for="fechaInicioFestivo" class="form-label">Fecha de inicio Festivo</label>
-                    <input type="date" class="form-control" id="fechaInicioFestivo" name="fechaInicioFestivo">
+                    <input type="date" class="form-control" id="fechaInicioFestivo" name="fechaInicioFestivo" required>
                 </div>
                 <div class="col-md-4">
                     <label for="fechaFinalFestivo" class="form-label">Fecha final Festivo</label>
-                    <input type="date" class="form-control" id="fechaFinalFestivo" name="fechaFinalFestivo">
+                    <input type="date" class="form-control" id="fechaFinalFestivo" name="fechaFinalFestivo" required>
                 </div>
             </div>
             <div class="mb-3">
@@ -85,31 +85,40 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
     $(document).ready(function(){
+        var dataIniciCurs = $("#data_inici").val();
+    var dataFinalCurs = $("#data_final").val();
+        //festius
         var festius = [];
 
-var numFestiu = 1;
+            var numFestiu = 1;
 
-$("#addFestivo").click(function () {
+        $("#addFestivo").click(function () {
 
-  for (var i = 0; i < numFestiu; i++) {
-    var nombreFestivo = $("#nombreFestivo").val();
-    var tipoFestivo = $("#tipoFestivo").val();
-    var fechaInicioTrimestre = $("#fechaInicioFestivo").val();
-    var fechaFinalTrimestre = $("#fechaFinalFestivo").val();
+        for (var i = 0; i < numFestiu; i++) {
+        var nombreFestivo = $("#nombreFestivo").val();
+        var tipoFestivo = $("#tipoFestivo").val();
+        var fechaInicioTrimestre = $("#fechaInicioFestivo").val();
+        var fechaFinalTrimestre = $("#fechaFinalFestivo").val();
 
-    var festiuData = {
+        var festiuData = {
       nom: nombreFestivo,
       tipus: tipoFestivo,
       inicio: fechaInicioTrimestre,
       fin: fechaFinalTrimestre
     };
-    console.log(festiuData);
   }
+
     festius.push(festiuData);
             var nombreFestivo = $("#nombreFestivo").val(); // Obtener el valor del nombre del festivo
             var tipoFestivo = $("#tipoFestivo").val();
             var fechaInicioFestivo = $("#fechaInicioFestivo").val(); // Obtener el valor de la fecha de inicio del festivo
             var fechaFinalFestivo = $("#fechaFinalFestivo").val(); // Obtener el valor de la fecha final del festivo
+
+            if (fechaInicioFestivo < dataIniciCurs || fechaFinalFestivo > dataFinalCurs) {
+            alert("Las fechas del trimestre deben estar dentro de las fechas del curso.");
+            return;
+        }
+
             $("#festiusData").val(JSON.stringify(festius));
                     var newFestivo = $('<div>', {class: 'festivo'});
                     newFestivo.append('<h3>' + nombreFestivo + '</h3>');
@@ -140,29 +149,38 @@ $("#addFestivo").click(function () {
             }
         });
 
+        //trimestres
         var numTrimestre = 1;
-  var trimestres = [];
+        var trimestres = [];
         $("#addTrimestre").click(function () {
+
                 if (numTrimestre <= 3) {
 
                     for (var i = 0; i < numTrimestre; i++) {
-  var trimestreName = "Trimestre " + (i + 1);
+        var trimestreName = "Trimestre " + (i + 1);
 
-  var fechaInicioTrimestre = $("#fechaInicioTrimestre").val(); // Obtener el valor de la fecha de inicio del trimestre
-  var fechaFinalTrimestre = $("#fechaFinalTrimestre").val(); // Obtener el valor de la fecha final del trimestre
+        var fechaInicioTrimestre = $("#fechaInicioTrimestre").val();
+        var fechaFinalTrimestre = $("#fechaFinalTrimestre").val();
 
-  var trimestreData = {
-    nom: trimestreName,
-    inicio: fechaInicioTrimestre,
-    fin: fechaFinalTrimestre
-  };
-
-}
-  trimestres.push(trimestreData);
+        var trimestreData = {
+        nom: trimestreName,
+        inicio: fechaInicioTrimestre,
+        fin: fechaFinalTrimestre
+        };
+} trimestres.push(trimestreData);
 
 
                     var fechaInicioTrimestre = $("#fechaInicioTrimestre").val();
                     var fechaFinalTrimestre = $("#fechaFinalTrimestre").val();
+
+                    if (fechaInicioTrimestre < dataIniciCurs || fechaFinalTrimestre > dataFinalCurs) {
+            alert("Las fechas del trimestre deben estar dentro de las fechas del curso.");
+            return;
+        }
+                    if (fechaInicioTrimestre === fechaFinalTrimestre) {
+            alert("La fecha de inicio y final del trimestre no pueden ser iguales.");
+            return;
+        }
 
         $("#trimestresData").val(JSON.stringify(trimestres));
                     var newTrimestre = $('<div>', {class: 'trimestre'});
@@ -173,7 +191,7 @@ $("#addFestivo").click(function () {
 
                     $("#trimestresContainer").append(newTrimestre);
 
-                    numTrimestre++; // Incrementar el número de trimestre
+                    numTrimestre++;
 
                     if (!$("#toggleAllTrimestresBtn").hasClass("active")) {
                         $(".trimestre").slideDown();
@@ -189,9 +207,6 @@ $("#addFestivo").click(function () {
 
             });
 
-
-
-
             $(document).on("click", ".deleteTrimestre", function(){
     $(this).closest('.trimestre').remove();
     updateTrimestreNumbers();
@@ -200,6 +215,40 @@ $("#addFestivo").click(function () {
     trimestres.splice(index, 1); // Eliminar el trimestre del array trimestres
     $("#trimestresData").val(JSON.stringify(trimestres)); // Actualizar el valor del campo oculto con los trimestres actualizados
 });
+  var fechaIniciocurs = $("#data_inici").val();
+        var fechaFinalcurs = $("#data_final").val();
+
+        $('form').submit(function(event) {
+    // Obtener los valores de fechaIniciocurs y fechaFinalcurs dentro de la función del evento submit
+    var fechaIniciocurs = $("#data_inici").val();
+    var fechaFinalcurs = $("#data_final").val();
+
+    // Verificar si el array de trimestres tiene exactamente 3 elementos
+    if (trimestres.length !== 3) {
+        alert("Debes ingresar exactamente 3 trimestres antes de enviar el formulario.");
+        event.preventDefault(); // Evitar el envío del formulario
+    }
+
+    // Verificar si las fechas de inicio y final del curso son iguales
+    if (fechaIniciocurs === fechaFinalcurs) {
+        alert("La fecha de inicio y final del curso no pueden ser iguales.");
+        event.preventDefault(); // Evitar el envío del formulario
+    }
+
+    // Obtener el año actual y los límites de año permitidos
+    var today = new Date();
+    var lastYear = today.getFullYear() - 1;
+    var nextYear = today.getFullYear() + 1;
+
+    // Verificar si las fechas del curso están dentro del rango permitido
+    var selectedYearInicio = new Date(fechaIniciocurs).getFullYear();
+    var selectedYearFinal = new Date(fechaFinalcurs).getFullYear();
+    if (selectedYearInicio < lastYear || selectedYearFinal > nextYear) {
+        alert("Las fechas del curso deben estar dentro del año pasado, este año y el próximo año.");
+        event.preventDefault(); // Evitar el envío del formulario
+    }
+});
+
 
 
             function updateTrimestreNumbers() {

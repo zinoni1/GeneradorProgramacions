@@ -16,15 +16,10 @@ class CursController extends Controller
      */
     public function index()
     {
-        $curs = Curs::all();
-        if (Auth::check() && Auth::user()->name === 'admin') {
-            // Si cumple con los criterios de autorización, mostrar la vista 'curs'
-            return view('formulari');
-        } else {
-            // Si no cumple con los criterios, redireccionar a una página de error
-            return view('error');
-        }
+        $cursos = Curs::all();
+        return view('calendari', ['cursos' => $cursos]);
     }
+
 
     public function store(Request $request)
     {
@@ -73,7 +68,14 @@ class CursController extends Controller
      */
     public function create()
     {
-        //
+        $curs = Curs::all();
+        if (Auth::check() && Auth::user()->name === 'admin') {
+            // Si cumple con los criterios de autorización, mostrar la vista 'curs'
+            return view('formulari');
+        } else {
+            // Si no cumple con los criterios, redireccionar a una página de error
+            return view('error');
+        }
     }
 
     /**
@@ -85,9 +87,11 @@ class CursController extends Controller
      * Display the specified resource.
      */
     public function show(Curs $curs)
-    {
-        //
-    }
+{
+
+}
+
+
 
     /**
      * Show the form for editing the specified resource.
