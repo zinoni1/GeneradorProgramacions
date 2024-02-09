@@ -85,8 +85,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
     $(document).ready(function(){
-        var dataIniciCurs = $("#data_inici").val();
-    var dataFinalCurs = $("#data_final").val();
+        var dataIniciCurs = new Date($("#data_inici").val());
+    var dataFinalCurs = new Date($("#data_final").val());
         //festius
         var festius = [];
 
