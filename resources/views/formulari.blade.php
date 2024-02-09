@@ -235,18 +235,7 @@
         event.preventDefault(); // Evitar el envío del formulario
     }
 
-    // Obtener el año actual y los límites de año permitidos
-    var today = new Date();
-    var lastYear = today.getFullYear() - 1;
-    var nextYear = today.getFullYear() + 1;
 
-    // Verificar si las fechas del curso están dentro del rango permitido
-    var selectedYearInicio = new Date(fechaIniciocurs).getFullYear();
-    var selectedYearFinal = new Date(fechaFinalcurs).getFullYear();
-    if (selectedYearInicio < lastYear || selectedYearFinal > nextYear) {
-        alert("Las fechas del curso deben estar dentro del año pasado, este año y el próximo año.");
-        event.preventDefault(); // Evitar el envío del formulario
-    }
 });
 
 
