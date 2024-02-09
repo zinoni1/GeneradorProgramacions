@@ -1,38 +1,22 @@
 @extends('master')
-
 @section('content')
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calendario Anual</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<style>
-    /* Estilos para líneas horizontales y verticales */
-    .table-bordered td, .table-bordered th {
-        border: 1px solid #dee2e6;
-    }
-
-    .table-bordered tr:last-child td {
-        border-bottom: 1px solid #dee2e6; /* Línea horizontal en la última fila */
-    }
-
-    .table-bordered td:last-child {
-        border-right: 1px solid #dee2e6; /* Línea vertical en la última columna */
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendari Curs</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 
 @foreach($cursos as $curs)
     <div class="container">
-        <h2>{{ $curs->nom }}</h2> <!-- Aquí mostramos el nombre del curso -->
+        <h2>{{ $curs->nom }}</h2>
         <div class="row">
             <div class="col">
                 <table class="table table-bordered">
-                    <thead class="bg-primary text-white">
+                    <thead>
                         <tr>
                             <th>Semana</th>
                             <th>Data</th>
@@ -40,37 +24,35 @@
                             <th>Tasca</th>
                         </tr>
                     </thead>
-                    <tbody id="calendar-body">
-                        <!-- Iterar sobre los cursos -->
-                        @php $contadorSemana = 1; @endphp
+                    <tbody>
                         @php
                             $inicio = new DateTime($curs->data_inici);
                             $final = new DateTime($curs->data_final);
-                            $diasCurso = $final->diff($inicio)->days;
                             $diasSemana = ['Monday' => 'Lunes', 'Tuesday' => 'Martes', 'Wednesday' => 'Miércoles', 'Thursday' => 'Jueves', 'Friday' => 'Viernes', 'Saturday' => 'Sábado', 'Sunday' => 'Domingo'];
                             $trimestres = App\Models\Trimestre::where('data_inici', '<=', $final)->where('data_final', '>=', $inicio)->get();
                             $festivos = App\Models\Festiu::where('data_inici', '>=', $inicio)->where('data_final', '<=', $final)->get();
+                            $contadorSemana = 0;
+                            $rowspan = 0;
                         @endphp
-                        @php $inicioSemana = clone $inicio; @endphp <!-- Clonamos la fecha de inicio de curso para mantenerla inmutable -->
-                        @for ($i = 0; $i <= $diasCurso; $i += 7)
-                        <tr>
-                            <td>{{ $contadorSemana }}</td>
-                            <td>
-                                @for ($j = 0; $j < 7 && $i + $j <= $diasCurso; $j++)
-                                    {{ $inicioSemana->format('d/m/Y') }}<br>
-                                    @php $inicioSemana->add(new DateInterval('P1D')); @endphp
-                                @endfor
-                            </td>
-                            <td>
-                                @php $inicioDia = clone $inicio; @endphp
-                                @for ($j = 0; $j < 7 && $i + $j <= $diasCurso; $j++)
-                                    {{ $diasSemana[$inicioDia->format('l')] }}<br>
-                                    @php $inicioDia->add(new DateInterval('P1D')); @endphp
-                                @endfor
-                            </td>
-                            <td>
-                                @for ($j = 0; $j < 7 && $i + $j <= $diasCurso; $j++)
-                                    {{-- Verificar si hay festivo o inicio/fin de trimestre --}}
+                        @while ($inicio <= $final)
+                            @php
+                                // Obtener el día de la semana
+                                $diaSemana = $inicio->format('N');
+                                // Calcular rowspan y número de semana
+                                if ($inicio->format('Y-m-d') == $curs->data_inici ||$diaSemana == 1 ) {
+                                    // Calcula los días restantes en la semana
+                                    $rowspan = 8 - $diaSemana ;
+                                    $contadorSemana++;
+                                }
+                            @endphp
+                            <tr>
+
+                                @if ($inicio->format('Y-m-d') == $curs->data_inici  ||$diaSemana == 1 )
+                                    <td rowspan="{{ $rowspan }}">{{ $contadorSemana }}</td>
+                                @endif
+                                <td>{{ $inicio->format('d/m/Y') }}</td>
+                                <td>{{ $diasSemana[$inicio->format('l')] }}</td>
+                                <td>
                                     @php
                                         $currentDate = $inicio->format('Y-m-d');
                                         $inicioCurso = $curs->data_inici;
@@ -97,15 +79,14 @@
                                     @elseif ($currentDate == $finCurso)
                                         Fin de Curso<br>
                                     @else
-                                        {{-- Deja la celda de tarea vacía si no hay eventos programados --}}
                                         <br>
                                     @endif
-                                    @php $inicio->add(new DateInterval('P1D')); @endphp
-                                @endfor
-                            </td>
-                        </tr>
-                        @php $contadorSemana++; @endphp
-                        @endfor
+                                </td>
+                            </tr>
+                            @php
+                                $inicio->add(new DateInterval('P1D'));
+                            @endphp
+                        @endwhile
                     </tbody>
                 </table>
             </div>
@@ -115,5 +96,3 @@
 
 </body>
 </html>
-
-@endsection
