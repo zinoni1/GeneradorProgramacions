@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Curs;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Trimestre;
 use App\Models\Festiu;
+use Excel;
+use App\Exports\CursExport;
 
 
 class CursController extends Controller
@@ -117,4 +120,12 @@ class CursController extends Controller
     {
         //
     }
+
+    public function exportCurs()
+{
+    $fileName = 'curs.xlsx';
+    return Excel::download(new CursExport, $fileName);
+}
+
+    
 }
