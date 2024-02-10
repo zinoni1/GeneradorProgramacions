@@ -62,6 +62,7 @@ class CursController extends Controller
                 $festiu->save();
               }
             }
+            return redirect()->route('curs.index');
     }
 /**
      * Show the form for creating a new resource.
