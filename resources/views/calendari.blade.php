@@ -93,6 +93,17 @@
         </div>
     </div>
 @endforeach
+<div class="container">
+    <div class="row">
+        <div class="col">
+        <form action="{{ route('curs.export') }}" method="GET">
+    @csrf
+    <button type="submit" class="btn btn-primary">Exportar a Excel</button>
+</form>
+
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
