@@ -24,8 +24,7 @@ Route::get('/', function () {
 
 Route::resource('curs', CursController::class);
 Route::resource('error', CursController::class);
-Route::resource('curs.trimestre', TrimestreController::class);
-Route::resource('curs.festiu', FestiuController::class);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
