@@ -17,7 +17,9 @@ class ModulFactory extends Factory
     public function definition(): array
     {
         return [
-            nom => $this->faker->word,
+
+            'nom' => $this->faker->word,
+
         ];
     }
 }

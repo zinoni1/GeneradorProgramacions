@@ -17,8 +17,10 @@ class NumDiesFactory extends Factory
     public function definition(): array
     {
         return [
-            dia => $this->faker->word,
-            num_sessio => $this->faker->randomDigit,
+
+            'dia' => $this->faker->word,
+            'num_sessio' => $this->faker->randomDigit,
+
         ];
     }
 }

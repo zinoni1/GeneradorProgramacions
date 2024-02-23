@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UF>
  */
-class UFFactory extends Factory
+class UfFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,11 @@ class UFFactory extends Factory
     public function definition(): array
     {
         return [
-            nom => $this->faker->word,
-            num_setmanes => $this->faker->randomDigit,
-            ordre => $this->faker->randomDigit,
+
+            'nom' => $this->faker->word,
+            'num_setmanes' => $this->faker->randomDigit,
+            'ordre' => $this->faker->randomDigit,
+
         ];
     }
 }

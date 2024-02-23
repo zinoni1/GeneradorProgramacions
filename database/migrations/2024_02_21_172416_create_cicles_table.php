@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('cicles', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('nom');
+            $table->integer('num_modul');
         });
     }
 

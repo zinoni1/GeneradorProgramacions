@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('num_dies', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('dia');
+            $table->integer('num_sessio');
+            $table->foreignId('modul_id')
+            ->  references('id')
+            -> on ('moduls')
+            -> onDelete('cascade');
         });
     }
 

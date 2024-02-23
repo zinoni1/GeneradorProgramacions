@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('u_f_s', function (Blueprint $table) {
+        Schema::create('ufs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('modul_id')->constrained()->onDelete('cascade');
             $table->timestamps();
+            $table->string('nom');
+            $table->integer('num_setmanes');
+            $table->integer('ordre');
+      
         });
     }
 
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('u_f_s');
+        Schema::dropIfExists('ufs');
     }
 };
