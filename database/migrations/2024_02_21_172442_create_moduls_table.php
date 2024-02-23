@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('moduls', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('nom');
+            $table->foreignId('cicle_id')
+            ->  references('id')
+            -> on ('cicles')
+            -> onDelete('cascade');
         });
     }
 

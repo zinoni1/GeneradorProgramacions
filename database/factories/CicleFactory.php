@@ -17,7 +17,8 @@ class CicleFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nom' => $this->faker->word,
+            'num_modul' => $this->faker->randomDigit,
         ];
     }
 }

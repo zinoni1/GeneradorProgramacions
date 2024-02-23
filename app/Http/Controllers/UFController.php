@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UF;
 use Illuminate\Http\Request;
 
-class UFController extends Controller
+class UfController extends Controller
 {
     /**
      * Display a listing of the resource.
