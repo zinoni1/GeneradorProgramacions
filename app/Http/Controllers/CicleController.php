@@ -12,7 +12,7 @@ class CicleController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard');
     }
 
     /**
@@ -20,7 +20,7 @@ class CicleController extends Controller
      */
     public function create()
     {
-        //
+        return view('formulariCicle');
     }
 
     /**

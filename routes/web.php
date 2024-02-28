@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CursController;
+use App\Http\Controllers\TrimestreController;
+use App\Http\Controllers\FestiuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +26,9 @@ Route::get('/', function () {
 
 Route::resource('curs', CursController::class);
 Route::resource('error', CursController::class);
+Route::resource('trimestre', TrimestreController::class);
+Route::resource('festiu', FestiuController::class);
+Route::resource('cicle', CicleController::class);
 
 
 Route::get('/dashboard', function () {

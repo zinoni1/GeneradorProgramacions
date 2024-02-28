@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Festiu;
+use App\Models\Curs;
 use App\Models\Trimestre;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,9 @@ class TrimestreController extends Controller
      */
     public function create()
     {
-        //
+        $cursoAnterior = Curs::orderByDesc('id')->first();
+        $trimestres = Trimestre::where('curs_id', $cursoAnterior ? $cursoAnterior->id : null)->get();
+    return view('formulariTrim', compact('trimestres'));
     }
 
     /**
@@ -28,8 +31,39 @@ class TrimestreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cursoAnterior = Curs::orderByDesc('id')->first(); // Obtener el último curso creado
+        $ultimosTresTrimestres = Trimestre::orderByDesc('id')->take(3)->get();
+
+        // Verificar si hay al menos tres trimestres creados
+        //verificar si los tres trimestres pertenecen al ultimo curso creado
+
+
+
+
+        // Si no se han creado tres trimestres o no pertenecen al mismo curso, continuar con la creación de trimestres
+        $trimestre = new Trimestre();
+        $trimestre->curs_id = $cursoAnterior ? $cursoAnterior->id : null; // Asignar el ID del último curso
+        $trimestre->nom = $request->input('nombreTrimestre');
+        $trimestre->data_inici = $request->input('IniciTrimestre');
+        $trimestre->data_final = $request->input('FinalTrimestre');
+        $trimestre->save();
+
+        if ($ultimosTresTrimestres->count() >= 3) {
+            // Verificar si los tres trimestres pertenecen al último curso creado
+            $trimestresDelUltimoCurso = $ultimosTresTrimestres->filter(function ($trimestre) use ($cursoAnterior) {
+                return $trimestre->curs_id == $cursoAnterior->id;
+            });
+
+            if ($trimestresDelUltimoCurso->count() == 2) {
+                return redirect()->route('festiu.create'); // Redirigir a la creación de festivos
+            }
+        }
+
+        return redirect()->route('trimestre.create');
+
     }
+
+
 
     /**
      * Display the specified resource.
