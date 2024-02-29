@@ -21,6 +21,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/formulari', function () {
+    return view('formulariCicle');
+});
+
 //TODO El curs ha de estar validat amb auth y nomes pot admin
 //Route::resource('curs', CursController::class);
 
