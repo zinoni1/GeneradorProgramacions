@@ -7,7 +7,7 @@
 
 
         <!-- Formulario para agregar festivos -->
-        <form action="{{ route('festiu.store') }}" method="POST" >
+        <form action="{{ route('curs.festiu.store',  ['cur' => $curs->id]) }}" method="POST" >
             @csrf
             <div class="row mb-3" style="background-color: #eaeaea; padding: 15px;">
                 <div class="col-md-4">

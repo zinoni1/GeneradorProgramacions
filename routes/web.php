@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CursController;
 use App\Http\Controllers\TrimestreController;
 use App\Http\Controllers\FestiuController;
+use App\Http\Controllers\CicleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,12 +29,14 @@ Route::get('/formulari', function () {
 
 //TODO El curs ha de estar validat amb auth y nomes pot admin
 //Route::resource('curs', CursController::class);
+Route::get('/error', function () {
+    return view('error');
+});
 
 Route::resource('curs', CursController::class);
-Route::resource('error', CursController::class);
-Route::resource('trimestre', TrimestreController::class);
-Route::resource('festiu', FestiuController::class);
-Route::resource('cicle', CicleController::class);
+Route::resource('curs.trimestre', TrimestreController::class);
+Route::resource('curs.festiu', FestiuController::class);
+Route::resource('curs.cicle', CicleController::class);
 
 
 Route::get('/dashboard', function () {

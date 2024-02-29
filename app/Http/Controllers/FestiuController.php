@@ -19,12 +19,14 @@ class FestiuController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function create()
-{
-    $cursoAnterior = Curs::orderByDesc('id')->first();
-    $festius = Festiu::where('curs_id', $cursoAnterior ? $cursoAnterior->id : null)->get();
-return view('formulariFest', compact('festius'));
-}
+    public function create()
+    {
+        $cursoAnterior = Curs::orderByDesc('id')->first();
+        $festius = Festiu::where('curs_id', $cursoAnterior ? $cursoAnterior->id : null)->get();
+        $curs = Curs::find($cursoAnterior->id); // Obtener el curso correspondiente
+        return view('formulariFest', compact('festius', 'curs'));
+    }
+    
 
 
 
@@ -47,7 +49,8 @@ return view('formulariFest', compact('festius'));
         // Guardar el curso en la base de datos
         $festiu->save();
 
-        return redirect()->route('festiu.create');
+        return redirect()->route('curs.festiu.create', ['cur' => $cursoAnterior ? $cursoAnterior->id : null]);
+
     }
 
     /**

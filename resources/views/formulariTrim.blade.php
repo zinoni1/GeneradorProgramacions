@@ -6,7 +6,7 @@
         <h1 class="mb-4">Formulario de creación de programaciones</h1>
 
         <!-- Formulario para agregar trimestres -->
-        <form id="trimestreForm" action="{{ route('trimestre.store') }}" method="POST">
+        <form id="trimestreForm" action="{{ route('curs.trimestre.store',  ['cur' => $curs->id]) }}" method="POST">
     @csrf
     <div class="row mb-3" style="background-color: #f2f2f2; padding: 15px;">
         <div class="col-md-4">

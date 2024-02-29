@@ -23,23 +23,23 @@ class CursController extends Controller
         return view('calendari', ['cursos' => $cursos]);
     }
 
-
     public function store(Request $request)
     {
         // Verificar si el campo 'nom' está presente en la solicitud
         if ($request->has('nom')) {
             $curs = new Curs(); // Crear una nueva instancia del modelo Curs
-
+    
             // Asignar los valores recibidos del formulario
             $curs->nom = $request->input('nom');
             $curs->data_inici = $request->input('data_inici');
             $curs->data_final = $request->input('data_final');
-
+    
             // Guardar el curso en la base de datos
             $curs->save();
         }
-        return redirect()->route('trimestre.create');
+        return redirect()->route('curs.trimestre.create', ['cur' => $curs->id]); // Pasar el ID del curso
     }
+    
 /**
      * Show the form for creating a new resource.
      */

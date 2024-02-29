@@ -23,8 +23,10 @@ class TrimestreController extends Controller
     {
         $cursoAnterior = Curs::orderByDesc('id')->first();
         $trimestres = Trimestre::where('curs_id', $cursoAnterior ? $cursoAnterior->id : null)->get();
-    return view('formulariTrim', compact('trimestres'));
+        $curs = Curs::find($cursoAnterior->id); // Obtener el curso correspondiente
+        return view('formulariTrim', compact('trimestres', 'curs'));
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -55,11 +57,13 @@ class TrimestreController extends Controller
             });
 
             if ($trimestresDelUltimoCurso->count() == 2) {
-                return redirect()->route('festiu.create'); // Redirigir a la creación de festivos
+                return redirect()->route('curs.festiu.create', ['cur' => $cursoAnterior ? $cursoAnterior->id : null]);
+
             }
         }
 
-        return redirect()->route('trimestre.create');
+        return redirect()->route('curs.trimestre.create', ['cur' => $cursoAnterior ? $cursoAnterior->id : null]);
+
 
     }
 
