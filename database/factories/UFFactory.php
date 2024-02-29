@@ -17,9 +17,11 @@ class UfFactory extends Factory
     public function definition(): array
     {
         return [
+
             'nom' => $this->faker->word,
             'num_setmanes' => $this->faker->randomDigit,
             'ordre' => $this->faker->randomDigit,
+
         ];
     }
 }
