@@ -10,6 +10,11 @@
             @foreach($cursos as $curs)
             <div class="mb-4">
                 <h3 class="mb-3">{{ $curs->nom }}</h3>
+                <a href="{{ route('curs.edit', $curs->id) }}" class="btn btn-warning">Editar</a>
+                <form action="{{ route('curs.destroy', $curs->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
