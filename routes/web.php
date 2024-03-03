@@ -6,6 +6,8 @@ use App\Http\Controllers\CursController;
 use App\Http\Controllers\TrimestreController;
 use App\Http\Controllers\FestiuController;
 use App\Http\Controllers\CicleController;
+use App\Http\Controllers\ModulController;
+use App\Http\Controllers\UfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +25,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/formulari', function () {
-    return view('formulariCicle');
-});
+
 
 //TODO El curs ha de estar validat amb auth y nomes pot admin
 //Route::resource('curs', CursController::class);
@@ -37,6 +37,8 @@ Route::resource('curs', CursController::class);
 Route::resource('curs.trimestre', TrimestreController::class);
 Route::resource('curs.festiu', FestiuController::class);
 Route::resource('curs.cicle', CicleController::class);
+Route::resource('curs.modul', ModulController::class);
+Route::resource('curs.uf', UfController::class);
 
 
 Route::get('/dashboard', function () {

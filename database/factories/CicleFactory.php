@@ -19,7 +19,6 @@ class CicleFactory extends Factory
         return [
 
             'nom' => $this->faker->word,
-            'num_modul' => $this->faker->randomDigit,
 
 
         ];

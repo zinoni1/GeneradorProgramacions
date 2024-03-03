@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Uf extends Model
 {
     use HasFactory;
-    protected $fillable = ['nom','num_setmanes', 'ordre'];
+    protected $fillable = ['nom','setmanes', 'ordre'];
 
 
     public function modul(){

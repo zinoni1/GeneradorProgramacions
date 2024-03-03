@@ -19,7 +19,7 @@ class UfFactory extends Factory
         return [
 
             'nom' => $this->faker->word,
-            'num_setmanes' => $this->faker->randomDigit,
+            'setmanes' => $this->faker->randomDigit,
             'ordre' => $this->faker->randomDigit,
 
         ];
