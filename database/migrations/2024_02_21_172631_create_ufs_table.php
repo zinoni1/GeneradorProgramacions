@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('modul_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->string('nom');
-            $table->integer('num_setmanes');
+            $table->integer('setmanes');
             $table->integer('ordre');
       
         });

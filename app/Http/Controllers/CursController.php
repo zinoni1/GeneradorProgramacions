@@ -43,17 +43,20 @@ class CursController extends Controller
 /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        $curs = Curs::all();
-        if (Auth::check() && Auth::user()->name === 'admin') {
-            // Si cumple con los criterios de autorización, mostrar la vista 'curs'
-            return view('formulari');
-        } else {
-            // Si no cumple con los criterios, redireccionar a una página de error
-            return view('error');
-        }
+/**
+ * Show the form for creating a new resource.
+ */
+public function create()
+{
+    $curs = new Curs(); // Crear una nueva instancia de Curs
+    if (Auth::check() && Auth::user()->name === 'admin') {
+        // Si cumple con los criterios de autorización, mostrar la vista 'formulari' con la variable $curs
+        return view('formulari', compact('curs'));
+    } else {
+        // Si no cumple con los criterios, redireccionar a una página de error
+        return view('error');
     }
+}
 
     /**
      * Store a newly created resource in storage.

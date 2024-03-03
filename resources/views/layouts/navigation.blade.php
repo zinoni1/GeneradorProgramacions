@@ -20,12 +20,8 @@
                     <x-nav-link :href="route('curs.create')" :active="request()->routeIs('formulari')">
                         {{ __('Formulari') }}
                     </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('cicle.create')" :active="request()->routeIs('formulariCicle')">
-                        {{ __('Formulari Cicle') }}
-                    </x-nav-link>
-                </div>
+                </div> 
+               
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('curs.index')" :active="request()->routeIs('calendari')">
                         {{ __('Calendari') }}

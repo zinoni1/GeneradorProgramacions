@@ -18,7 +18,7 @@ class Modul extends Model
         return $this->hasMany(NumDies::class);
     }
 
-    public function cicles(){
+    public function cicle(){
         return $this->belongsTo(Cicle::class);
     }
     
