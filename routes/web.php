@@ -8,6 +8,7 @@ use App\Http\Controllers\FestiuController;
 use App\Http\Controllers\CicleController;
 use App\Http\Controllers\ModulController;
 use App\Http\Controllers\UfController;
+use App\Models\Curs;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +43,24 @@ Route::resource('curs.uf', UfController::class);
 
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $allcursos = Curs::all();
+    $cursos = [];
+    foreach ($allcursos as $curs) {
+        // Agregar el día de inicio del evento
+        $cursos[] = [
+            'title' => $curs->nom . ' (Inicio)',
+            'start' => $curs->data_inici,
+            'color' => '#FF5733',
+        ];
+
+        // Agregar el día de fin del evento
+        $cursos[] = [
+            'title' => $curs->nom . ' (Fin)',
+            'start' => $curs->data_final,
+            'color' => '#FF5733',
+        ];
+    }
+    return view('dashboard', compact('cursos'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
