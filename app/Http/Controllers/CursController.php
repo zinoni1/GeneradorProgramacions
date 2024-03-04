@@ -19,8 +19,27 @@ class CursController extends Controller
      */
     public function index()
     {
-        $cursos = Curs::all();
-        return view('calendari', ['cursos' => $cursos]);
+        {
+            $allcursos = Curs::all();
+            $cursos = [];
+            $cursos1 = [];
+            foreach ($allcursos as $curs) {
+                // Agregar el día de inicio del evento
+                $cursos[] = [
+                    'title' => $curs->nom . ' (Inicio)',
+                    'start' => $curs->data_inici,
+                    'color' => '#FF5733',
+                ];
+
+                // Agregar el día de fin del evento
+                $cursos[] = [
+                    'title' => $curs->nom . ' (Fin)',
+                    'start' => $curs->data_final,
+                    'color' => '#FF5733',
+                ];
+            }
+            return view('dashboard', compact('cursos'));
+        }
     }
 
     public function store(Request $request)
@@ -28,18 +47,18 @@ class CursController extends Controller
         // Verificar si el campo 'nom' está presente en la solicitud
         if ($request->has('nom')) {
             $curs = new Curs(); // Crear una nueva instancia del modelo Curs
-    
+
             // Asignar los valores recibidos del formulario
             $curs->nom = $request->input('nom');
             $curs->data_inici = $request->input('data_inici');
             $curs->data_final = $request->input('data_final');
-    
+
             // Guardar el curso en la base de datos
             $curs->save();
         }
         return redirect()->route('curs.trimestre.create', ['cur' => $curs->id]); // Pasar el ID del curso
     }
-    
+
 /**
      * Show the form for creating a new resource.
      */
