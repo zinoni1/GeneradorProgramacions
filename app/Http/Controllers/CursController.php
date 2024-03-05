@@ -19,27 +19,8 @@ class CursController extends Controller
      */
     public function index()
     {
-        {
-            $allcursos = Curs::all();
-            $cursos = [];
-            $cursos1 = [];
-            foreach ($allcursos as $curs) {
-                // Agregar el día de inicio del evento
-                $cursos[] = [
-                    'title' => $curs->nom . ' (Inicio)',
-                    'start' => $curs->data_inici,
-                    'color' => '#FF5733',
-                ];
-
-                // Agregar el día de fin del evento
-                $cursos[] = [
-                    'title' => $curs->nom . ' (Fin)',
-                    'start' => $curs->data_final,
-                    'color' => '#FF5733',
-                ];
-            }
-            return view('dashboard', compact('cursos'));
-        }
+        $cursos = Curs::all(); // Obtener todos los cursos
+        return view('calendaris', ['cursos' => $cursos]); // Pasar la variable $cursos a la vista 'calendari'
     }
 
     public function store(Request $request)
@@ -85,10 +66,12 @@ public function create()
     /**
      * Display the specified resource.
      */
-    public function show(Curs $curs)
-{
+    public function show($id)
+    {
+        $curs = Curs::find($id); // Obtener el curso con el ID proporcionado
+        return view('calendari', ['curs' => $curs]); // Pasar las variables $curs, $trimestres y $festius a la vista 'curs'
+    }
 
-}
 
 
 

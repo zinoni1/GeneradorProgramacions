@@ -18,7 +18,7 @@
         center: 'title',
         right: 'timeGridWeek,dayGridMonth'
       },
-    events: {!! json_encode($cursos) !!}
+    events: {!! json_encode($cursos) !!},
     })
     calendar.render()
   })
