@@ -87,7 +87,7 @@ Route::get('/dashboard', function () {
     foreach ($allFestius as $festiu) {
         // Agregar el día de inicio del evento
         $cursos[] = [
-            'title' => $festiu->nom . ' (Inicio)',
+            'title' => $festiu->nom ,
             'start' => $festiu->data_inici,
             'end'   => $festiu->data_final,
             'color' => '#BDECB6',
