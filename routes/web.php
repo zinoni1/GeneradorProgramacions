@@ -9,6 +9,10 @@ use App\Http\Controllers\CicleController;
 use App\Http\Controllers\ModulController;
 use App\Http\Controllers\UfController;
 use App\Http\Controllers\NumDiesController;
+use App\Models\Curs;
+use App\Models\Trimestre;
+use App\Models\Festiu;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -41,10 +45,60 @@ Route::resource('curs.cicle', CicleController::class);
 Route::resource('curs.modul', ModulController::class);
 Route::resource('curs.uf', UfController::class);
 Route::resource('cicle.numdies', NumDiesController::class);
+Route::get('curs/{id}', 'CursController@show')->name('curs.show');
 
+
+//ruta calendari
+Route::get('/calendari', [CursController::class, 'index'])->name('calendari');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $allcursos = Curs::all();
+    $allTrimestres = Trimestre::all();
+    $allFestius = Festiu::all();
+    $cursos = [];
+    foreach ($allcursos as $curs) {
+        // Agregar el día de inicio del evento
+        $cursos[] = [
+            'title' => $curs->nom . ' (Inicio)',
+            'start' => $curs->data_inici,
+            'color' => '#FF5733',
+        ];
+
+        // Agregar el día de fin del evento
+        $cursos[] = [
+            'title' => $curs->nom . ' (Fin)',
+            'start' => $curs->data_final,
+            'color' => '#FF5733',
+        ];
+    }
+
+    foreach ($allTrimestres as $trimestre) {
+        // Agregar el día de inicio del evento
+        $cursos[] = [
+            'title' => $trimestre->nom . ' (Inicio)',
+            'start' => $trimestre->data_inici,
+            'color' => '#0000FF',
+        ];
+
+        // Agregar el día de fin del evento
+        $cursos[] = [
+            'title' => $trimestre->nom . ' (Fin)',
+            'start' => $trimestre->data_final,
+            'color' => '#0000FF',
+        ];
+    }
+    foreach ($allFestius as $festiu) {
+        // Agregar el día de inicio del evento
+        $cursos[] = [
+            'title' => $festiu->nom ,
+            'start' => $festiu->data_inici,
+            'end'   => $festiu->data_final,
+            'color' => '#BDECB6',
+        ];
+
+
+    }
+    return view('dashboard', compact('cursos'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 

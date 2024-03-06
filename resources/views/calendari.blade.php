@@ -7,7 +7,6 @@
             <h2 class="mb-0">Calendario de Cursos</h2>
         </div>
         <div class="card-body">
-            @foreach($cursos as $curs)
             <div class="mb-4">
                 <h3 class="mb-3">{{ $curs->nom }}</h3>
                 <a href="{{ route('curs.edit', $curs->id) }}" class="btn btn-warning">Editar</a>
@@ -89,7 +88,6 @@
                     </table>
                 </div>
             </div>
-            @endforeach
         </div>
         <div class="card-footer">
             <form action="{{ route('curs.export') }}" method="GET">
