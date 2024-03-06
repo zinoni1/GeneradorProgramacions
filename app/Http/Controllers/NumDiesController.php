@@ -25,8 +25,9 @@ class NumDiesController extends Controller
     {
         $cicle = Cicle::findOrFail($cicleId);
         $cicles = Cicle::all(); // Obtener todos los ciclos disponibles
-        return view('formProfe', compact('cicle', 'cicles'));
+        return view('formProfe')->with(['cicle' => $cicle, 'cicles' => $cicles]);
     }
+    
     
     
     /**
@@ -49,7 +50,8 @@ class NumDiesController extends Controller
         $asignacion->save();
 
         // Redireccionar a donde desees después de guardar la asignación
-        return redirect()->route('dashboard')->with('success', 'Asignación de horas del módulo creada exitosamente');
+        return redirect()->route('dashboard')->with('success', 'Assignació d''hores del mòdul creada amb èxit');
+
     }
     
 

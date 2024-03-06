@@ -19,14 +19,14 @@
 <div class="container mt-4">
     <div class="card shadow">
         <div class="card-header bg-primary text-white">
-            <h2 class="mb-0">Calendario de Cursos</h2>
+            <h2 class="mb-0">Calendari de Cursos</h2>
         </div>
         <div class="card-body">
             @foreach($cursos as $index => $curs)
             <div class="mb-4 {{ $index % 2 == 0 ? 'bg-white' : 'bg-gray' }}">
                 <h3 class="mb-3">{{ $curs->nom }}</h3>
                 <form action="{{ route('curs.show', $curs->id) }}"  class="d-inline">
-                    <button type="submit" class="btn btn-info">Ver</button>
+                    <button type="submit" class="btn btn-info">Veure</button>
                 </form>
 
             </div>

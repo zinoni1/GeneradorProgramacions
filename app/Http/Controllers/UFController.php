@@ -24,14 +24,15 @@ class UfController extends Controller
      * Show the form for creating a new resource.
      */
     public function create($modulId)
-    {
-        $modul = Modul::find($modulId);
-        if (Auth::check() && Auth::user()->name === 'admin') {
-            return view('formUf', compact('modul'));
-        } else {
-            return view('error');
-        }
+{
+    $modul = Modul::find($modulId);
+    if (Auth::check() && Auth::user()->name === 'admin') {
+        return view('formUf')->with('modul', $modul);
+    } else {
+        return view('error');
     }
+}
+
     
 
     /**
@@ -55,7 +56,7 @@ class UfController extends Controller
         $uf->save();
     
         // Redireccionar o devolver una respuesta según tus necesidades
-        return redirect()->route('curs.uf.create', ['cur' => $modulId])->with('success', 'Unidad Formativa creada exitosamente');
+        return redirect()->route('curs.uf.create', ['cur' => $modulId])->with('success', 'Unitat formativa creada exitosament');
     }
     
 

@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <div class="card shadow">
         <div class="card-header bg-primary text-white">
-            <h2 class="mb-0">Calendario de Cursos</h2>
+            <h2 class="mb-0">Calendari de Cursos</h2>
         </div>
         <div class="card-body">
             <div class="mb-4">
@@ -20,7 +20,7 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>Semana</th>
+                                <th>Setmana</th>
                                 <th>Data</th>
                                 <th>Dia</th>
                                 <th>Tasca</th>
@@ -30,7 +30,7 @@
                             @php
                             $inicio = new DateTime($curs->data_inici);
                             $final = new DateTime($curs->data_final);
-                            $diasSemana = ['Monday' => 'Lunes', 'Tuesday' => 'Martes', 'Wednesday' => 'Miércoles', 'Thursday' => 'Jueves', 'Friday' => 'Viernes', 'Saturday' => 'Sábado', 'Sunday' => 'Domingo'];
+                            $diasSemana = ['Monday' => 'Dilluns', 'Tuesday' => 'Dimarts', 'Wednesday' => 'Dimecres', 'Thursday' => 'Dijous', 'Friday' => 'Divendres', 'Saturday' => 'Dissabte', 'Sunday' => 'Diumenge'];
                             $trimestres = App\Models\Trimestre::where('data_inici', '<=', $final)->where('data_final', '>=', $inicio)->get();
                             $festivos = App\Models\Festiu::where('data_inici', '>=', $inicio)->where('data_final', '<=', $final)->get();
                             $contadorSemana = 0;
@@ -72,13 +72,13 @@
                                     @if ($festivo)
                                     {{ $festivo->nom }} - {{ $festivo->tipus }}
                                     @elseif ($trimestreInicio)
-                                    {{ $trimestreInicio->nom }} - Inicio de Trimestre
+                                    {{ $trimestreInicio->nom }} - Inici de Trimestre
                                     @elseif ($trimestreFin)
-                                    {{ $trimestreFin->nom }} - Fin de Trimestre
+                                    {{ $trimestreFin->nom }} - Fi de Trimestre
                                     @elseif ($currentDate == $inicioCurso)
-                                    Inicio de Curso
+                                    Inici de Curs
                                     @elseif ($currentDate == $finCurso)
-                                    Fin de Curso
+                                    Fi de Curs
                                     @endif
                                 </td>
                             </tr>

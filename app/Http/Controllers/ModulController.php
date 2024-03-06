@@ -25,11 +25,12 @@ class ModulController extends Controller
     {
         $curs = Curs::find($cursId);
         if (Auth::check() && Auth::user()->name === 'admin') {
-            return view('formModul', compact('curs'));
+            return view('formModul')->with('curs', $curs);
         } else {
             return view('error');
         }
     }
+    
 
 
     public function store(Request $request,$cicleId)

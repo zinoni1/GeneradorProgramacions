@@ -61,7 +61,7 @@ class CicleController extends Controller
         $curs = Curs::find($cursId); // Obtener el curso por su ID
         if (Auth::check() && Auth::user()->name === 'admin') {
             // Si cumple con los criterios de autorización, mostrar la vista 'formulari' con la variable $curs
-            return view('formulariCicle', compact('curs'));
+            return view('formulariCicle', ['curs' => $curs]);
         } else {
             // Si no cumple con los criterios, redireccionar a una página de error
             return view('error');
