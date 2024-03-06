@@ -14,6 +14,8 @@
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>

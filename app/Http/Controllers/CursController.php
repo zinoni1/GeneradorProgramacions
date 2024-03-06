@@ -94,10 +94,14 @@ public function create()
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Curs $curs)
+    public function destroy($id)
     {
-        //
+        $curs = Curs::findOrFail($id);
+        $curs->delete();
+        $cursos = Curs::all();
+        return view('calendaris', ['cursos' => $cursos]);
     }
+
 
     public function exportCurs()
 {

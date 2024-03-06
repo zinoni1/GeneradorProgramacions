@@ -46,6 +46,8 @@ Route::resource('curs.modul', ModulController::class);
 Route::resource('curs.uf', UfController::class);
 Route::resource('cicle.numdies', NumDiesController::class);
 Route::get('curs/{id}', 'CursController@show')->name('curs.show');
+Route::delete('curs/{id}', 'CursController@destroy')->name('curs.destroy');
+
 
 
 //ruta calendari
