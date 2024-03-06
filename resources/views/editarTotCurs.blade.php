@@ -30,7 +30,7 @@
                 </div>
             @endforeach
         @else
-            <p>No hay trimestres disponibles.</p>
+            <p>No hi ha trimestres disponibles.</p>
         @endif
     </div>
 
@@ -40,25 +40,25 @@
                 <div class="col-md-4">
                     <div class="card shadow">
                         <div class="card-header bg-primary text-white">
-                            <h5 class="mb-0">Editar Festivo: {{ $festivo->nombre }}</h5>
+                            <h5 class="mb-0">Editar Festiu: {{ $festivo->nombre }}</h5>
                         </div>
                         <div class="card-body">
-                            <a href="{{ route('curs.festiu.edit', ['cur' => $curs->id, 'festiu' => $festivo->id]) }}" class="btn btn-primary">Editar Festivo</a>
+                            <a href="{{ route('curs.festiu.edit', ['cur' => $curs->id, 'festiu' => $festivo->id]) }}" class="btn btn-primary">Editar Festiu</a>
                         </div>
                     </div>
                 </div>
             @endforeach
         @else
-            <p>No hay festivos disponibles.</p>
+            <p>No hi ha festius disponibles.</p>
         @endif
     </div>
 </div>
-<!--Crear boton para crear festivo -->
+<!--Crear botó per crear festiu -->
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-4">
                 <div class="card-body">
-                    <a href="{{ route('curs.festiu.create', $curs->id) }}" class="btn btn-success">Crear Festivo</a>
+                    <a href="{{ route('curs.festiu.create', $curs->id) }}" class="btn btn-success">Crear Festiu</a>
                 </div>
         </div>
     </div>

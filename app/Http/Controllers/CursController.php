@@ -31,10 +31,10 @@ class CursController extends Controller
             'data_inici' => 'required|date|after_or_equal:2020-01-01',
             'data_final' => 'required|date|after:data_inici',
         ], [
-            'nom.required' => 'El nombre del curso es obligatorio.',
-            'nom.string' => 'El nombre del curso debe ser una cadena de caracteres.',
-            'data_inici.after_or_equal' => 'La fecha de inicio del curso debe ser a partir del año 2020.',
-            'data_final.after' => 'La fecha final debe ser posterior a la fecha de inicio del curso.',
+            'nom.required' => 'El nom del curs és obligatori.',
+            'nom.string' => 'El nom del curs ha de ser una cadena de caràcters.',
+            'data_inici.after_or_equal' => 'La data d\'inici del curs ha de ser a partir de l\'any 2020.',
+            'data_final.after' => 'La data final ha de ser posterior a la data d\'inici del curs.',
         ]);
         
         // Verificar si el campo 'nom' está presente en la solicitud
@@ -69,7 +69,7 @@ public function create()
     $curs = new Curs(); // Crear una nueva instancia de Curs
     if (Auth::check() && Auth::user()->name === 'admin') {
         // Si cumple con los criterios de autorización, mostrar la vista 'formulari' con la variable $curs
-        return view('formulari', compact('curs'));
+        return view('formulari')->with('curs', $curs);
     } else {
         // Si no cumple con los criterios, redireccionar a una página de error
         return view('error');
@@ -99,23 +99,23 @@ public function create()
     public function edit($id)
     {
         $curs = Curs::findOrFail($id);
-        return view('editarCurs', compact('curs'));
+        return view('editarCurs')->with('curs', $curs);
     }
 
     public function editTot($id)
-{
-    // Obtener el curso con el ID proporcionado
-    $curs = Curs::findOrFail($id);
+    {
+        // Obtener el curso con el ID proporcionado
+        $curs = Curs::findOrFail($id);
 
-    // Obtener todos los trimestres asociados con este curso
-    $trimestres = Trimestre::where('curs_id', $id)->get();
+        // Obtener todos los trimestres asociados con este curso
+        $trimestres = Trimestre::where('curs_id', $id)->get();
 
-    // Obtener todos los festivos asociados con este curso
-    $festivos = Festiu::where('curs_id', $id)->get();
+        // Obtener todos los festivos asociados con este curso
+        $festivos = Festiu::where('curs_id', $id)->get();
 
-    // Retornar la vista 'editarTotCurs' con los datos necesarios
-    return view('editarTotCurs', compact('curs', 'trimestres', 'festivos'));
-}
+        // Retornar la vista 'editarTotCurs' con los datos necesarios
+        return view('editarTotCurs')->with('curs', $curs)->with('trimestres', $trimestres)->with('festivos', $festivos);
+    }
 
 
 
@@ -148,7 +148,7 @@ public function create()
         $festivos = Festiu::where('curs_id', $id)->get();
 
         // Retornar la vista 'editarTotCurs' con los datos necesarios
-        return view('editarTotCurs', compact('curs', 'trimestres', 'festivos'));
+        return view('editarTotCurs')->with('curs', $curs)->with('trimestres', $trimestres)->with('festivos', $festivos);
     }
 
 
