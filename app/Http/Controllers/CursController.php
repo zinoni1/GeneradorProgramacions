@@ -96,18 +96,61 @@ public function create()
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Curs $curs)
+    public function edit($id)
     {
-        //
+        $curs = Curs::findOrFail($id);
+        return view('editarCurs', compact('curs'));
     }
+
+    public function editTot($id)
+{
+    // Obtener el curso con el ID proporcionado
+    $curs = Curs::findOrFail($id);
+
+    // Obtener todos los trimestres asociados con este curso
+    $trimestres = Trimestre::where('curs_id', $id)->get();
+
+    // Obtener todos los festivos asociados con este curso
+    $festivos = Festiu::where('curs_id', $id)->get();
+
+    // Retornar la vista 'editarTotCurs' con los datos necesarios
+    return view('editarTotCurs', compact('curs', 'trimestres', 'festivos'));
+}
+
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Curs $curs)
+    public function update(Request $request, $id)
     {
-        //
+        // Validar los datos del formulario
+        $request->validate([
+            'nom' => 'required',
+            'data_inici' => 'required|date',
+            'data_final' => 'required|date|after_or_equal:data_inici',
+        ]);
+
+        // Encontrar el curso a actualizar
+        $curs = Curs::findOrFail($id);
+
+        // Actualizar los atributos del curso con los nuevos valores del formulario
+        $curs->nom = $request->input('nom');
+        $curs->data_inici = $request->input('data_inici');
+        $curs->data_final = $request->input('data_final');
+
+        // Guardar los cambios en la base de datos
+        $curs->save();
+
+        $trimestres = Trimestre::where('curs_id', $id)->get();
+
+        // Obtener todos los festivos asociados con este curso
+        $festivos = Festiu::where('curs_id', $id)->get();
+
+        // Retornar la vista 'editarTotCurs' con los datos necesarios
+        return view('editarTotCurs', compact('curs', 'trimestres', 'festivos'));
     }
+
 
     /**
      * Remove the specified resource from storage.

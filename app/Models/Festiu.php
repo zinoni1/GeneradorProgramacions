@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Cursos;
+use App\Models\Curs;
 
 class Festiu extends Model
 {
@@ -14,6 +14,6 @@ class Festiu extends Model
 
     public function curs()
     {
-        return $this->belongsTo(Cursos::class);
+        return $this->belongsTo(Curs::class);
     }
 }
