@@ -29,6 +29,7 @@
                 <form action="{{ route('curs.show', $curs->id) }}"  class="d-inline">
                     <button type="submit" class="btn btn-info">Ver</button>
                 </form>
+
             </div>
             @endforeach
         </div>
