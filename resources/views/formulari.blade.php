@@ -29,17 +29,3 @@
 
     </div>
 @endsection
-
-<style>
-    .festivo-content {
-        margin-top: 10px;
-    }
-    #toggleAllBtn {
-        display: none;
-        background-color: #00FFFF;
-    }
-    #toggleAllTrimestresBtn {
-        display: none;
-        background-color: #00FFFF;
-    }
-</style>

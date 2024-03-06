@@ -47,7 +47,10 @@ Route::resource('curs.uf', UfController::class);
 Route::resource('cicle.numdies', NumDiesController::class);
 Route::get('curs/{id}', 'CursController@show')->name('curs.show');
 Route::delete('curs/{id}', 'CursController@destroy')->name('curs.destroy');
-
+Route::put('curs/{id}', 'CursController@update')->name('curs.update');
+Route::get('curs/{id}/editTot', [CursController::class, 'editTot'])->name('curs.editTot');
+Route::put('curs/{id}/trimestre/{trimestre_id}', [TrimestreController::class, 'update'])->name('trimestre.update');
+Route::put('curs/{id}/festiu/{festiu_id}', [FestiuController::class, 'update'])->name('festiu.update');
 
 
 //ruta calendari

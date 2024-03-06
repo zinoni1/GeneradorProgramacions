@@ -25,7 +25,6 @@
             @foreach($cursos as $index => $curs)
             <div class="mb-4 {{ $index % 2 == 0 ? 'bg-white' : 'bg-gray' }}">
                 <h3 class="mb-3">{{ $curs->nom }}</h3>
-                <a href="{{ route('curs.edit', $curs->id) }}" class="btn btn-warning">Editar</a>
                 <form action="{{ route('curs.show', $curs->id) }}"  class="d-inline">
                     <button type="submit" class="btn btn-info">Ver</button>
                 </form>
