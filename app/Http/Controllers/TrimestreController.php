@@ -34,63 +34,69 @@ class TrimestreController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $cursoAnterior = Curs::orderByDesc('id')->first(); // Obtener el último curso creado
-        $ultimosTresTrimestres = Trimestre::orderByDesc('id')->take(3)->get();
+{
+    $cursoAnterior = Curs::orderByDesc('id')->first(); // Obtener el último curso creado
+    $ultimosTresTrimestres = Trimestre::orderByDesc('id')->take(3)->get();
 
-        // Verificar si hay al menos tres trimestres creados
-        //verificar si los tres trimestres pertenecen al ultimo curso creado
-        // Si no se han creado tres trimestres o no pertenecen al mismo curso, continuar con la creación de trimestres
-        // Validaciones
-        $validator = Validator::make($request->all(), [
-            'nombreTrimestre' => 'required|unique:trimestres,nom,NULL,id,curs_id,' . ($cursoAnterior ? $cursoAnterior->id : null),
-            'IniciTrimestre' => [
-                'required',
-                'date',
-                'date_format:Y-m-d',
-                // Validar que la fecha de inicio esté dentro del rango del curso
-                function ($attribute, $value, $fail) use ($cursoAnterior) {
-                    if ($value < $cursoAnterior->data_inici || $value > $cursoAnterior->data_final) {
-                        $fail('La fecha de inicio debe estar dentro del rango del curso.');
-                    }
-                },
-            ],
-            'FinalTrimestre' => [
-                'required',
-                'date',
-                'date_format:Y-m-d',
-                'after_or_equal:IniciTrimestre',
-                // Validar que la fecha de fin esté dentro del rango del curso
-                function ($attribute, $value, $fail) use ($cursoAnterior, $request) {
-                    $fechaInicio = $request->input('IniciTrimestre');
-                    if ($value < $fechaInicio) {
-                        $fail('La fecha de fin no puede ser anterior a la fecha de inicio.');
-                    }
-                    if ($value > $cursoAnterior->data_final) {
-                        $fail('La fecha de fin debe estar dentro del rango del curso.');
-                    }
-                },
-                // Validar que la fecha de inicio y fin no sean iguales
-                'different:IniciTrimestre',
-            ],
-        ]);
+    // Verificar si hay al menos tres trimestres creados
+    //verificar si los tres trimestres pertenecen al ultimo curso creado
+    // Si no se han creado tres trimestres o no pertenecen al mismo curso, continuar con la creación de trimestres
+    // Validaciones
+    $validator = Validator::make($request->all(), [
+        'nombreTrimestre' => 'required|unique:trimestres,nom,NULL,id,curs_id,' . ($cursoAnterior ? $cursoAnterior->id : null),
+        'IniciTrimestre' => [
+            'required',
+            'date',
+            'date_format:Y-m-d',
+            // Validar que la fecha de inicio esté dentro del rango del curso
+            function ($attribute, $value, $fail) use ($cursoAnterior) {
+                if ($value < $cursoAnterior->data_inici || $value > $cursoAnterior->data_final) {
+                    $fail('La fecha de inicio debe estar dentro del rango del curso.');
+                }
+            },
+        ],
+        'FinalTrimestre' => [
+            'required',
+            'date',
+            'date_format:Y-m-d',
+            'after_or_equal:IniciTrimestre',
+            // Validar que la fecha de fin esté dentro del rango del curso
+            function ($attribute, $value, $fail) use ($cursoAnterior, $request) {
+                $fechaInicio = $request->input('IniciTrimestre');
+                if ($value < $fechaInicio) {
+                    $fail('La fecha de fin no puede ser anterior a la fecha de inicio.');
+                }
+                if ($value > $cursoAnterior->data_final) {
+                    $fail('La fecha de fin debe estar dentro del rango del curso.');
+                }
+            },
+            // Validar que la fecha de inicio y fin no sean iguales
+            'different:IniciTrimestre',
+        ],
+    ]);
 
-        // Si la validación falla, redireccionar de nuevo al formulario con los mensajes de error
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+    // Si la validación falla, redireccionar de nuevo al formulario con los mensajes de error
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
+    }
 
-        // Crear el trimestre si pasa todas las validaciones
-        $trimestre = new Trimestre();
-        $trimestre->curs_id = $cursoAnterior ? $cursoAnterior->id : null; // Asignar el ID del último curso
-        $trimestre->nom = $request->input('nombreTrimestre');
-        $trimestre->data_inici = $request->input('IniciTrimestre');
-        $trimestre->data_final = $request->input('FinalTrimestre');
-        $trimestre->save();
+    // Crear el trimestre si pasa todas las validaciones
+    $trimestre = new Trimestre();
+    $trimestre->curs_id = $cursoAnterior ? $cursoAnterior->id : null; // Asignar el ID del último curso
+    $trimestre->nom = $request->input('nombreTrimestre');
+    $trimestre->data_inici = $request->input('IniciTrimestre');
+    $trimestre->data_final = $request->input('FinalTrimestre');
+    $trimestre->save();
 
-        // Redireccionar de vuelta al formulario de creación de trimestres
+    // Redireccionar de vuelta al formulario de creación de trimestres
+    if ($ultimosTresTrimestres->count() === 2) {
+        // Si se han creado tres trimestres, redirigir a la página curs.festiu
+        return redirect()->route('curs.festiu.create', ['cur' => $cursoAnterior ? $cursoAnterior->id : null]);
+    } else {
+        // Si no se han creado tres trimestres, redirigir al formulario de creación de trimestres
         return redirect()->route('curs.trimestre.create', ['cur' => $cursoAnterior ? $cursoAnterior->id : null]);
     }
+}
 
 
 
