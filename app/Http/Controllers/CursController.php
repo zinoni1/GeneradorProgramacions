@@ -25,20 +25,38 @@ class CursController extends Controller
 
     public function store(Request $request)
     {
+        // Validación de campos
+        $request->validate([
+            'nom' => 'required|string',
+            'data_inici' => 'required|date|after_or_equal:2020-01-01',
+            'data_final' => 'required|date|after:data_inici',
+        ], [
+            'nom.required' => 'El nombre del curso es obligatorio.',
+            'nom.string' => 'El nombre del curso debe ser una cadena de caracteres.',
+            'data_inici.after_or_equal' => 'La fecha de inicio del curso debe ser a partir del año 2020.',
+            'data_final.after' => 'La fecha final debe ser posterior a la fecha de inicio del curso.',
+        ]);
+        
         // Verificar si el campo 'nom' está presente en la solicitud
         if ($request->has('nom')) {
             $curs = new Curs(); // Crear una nueva instancia del modelo Curs
-
+        
             // Asignar los valores recibidos del formulario
             $curs->nom = $request->input('nom');
             $curs->data_inici = $request->input('data_inici');
             $curs->data_final = $request->input('data_final');
-
+        
             // Guardar el curso en la base de datos
             $curs->save();
         }
-        return redirect()->route('curs.trimestre.create', ['cur' => $curs->id]); // Pasar el ID del curso
+        
+        return redirect()->route('curs.trimestre.create', ['cur' => $curs->id])
+                         ->withInput($request->except('nom'));
     }
+    
+    
+    
+    
 
 /**
      * Show the form for creating a new resource.
