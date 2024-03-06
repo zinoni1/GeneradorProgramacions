@@ -8,9 +8,11 @@ use App\Http\Controllers\FestiuController;
 use App\Http\Controllers\CicleController;
 use App\Http\Controllers\ModulController;
 use App\Http\Controllers\UfController;
+use App\Http\Controllers\NumDiesController;
 use App\Models\Curs;
 use App\Models\Trimestre;
 use App\Models\Festiu;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +44,7 @@ Route::resource('curs.festiu', FestiuController::class);
 Route::resource('curs.cicle', CicleController::class);
 Route::resource('curs.modul', ModulController::class);
 Route::resource('curs.uf', UfController::class);
+Route::resource('cicle.numdies', NumDiesController::class);
 Route::get('curs/{id}', 'CursController@show')->name('curs.show');
 
 
