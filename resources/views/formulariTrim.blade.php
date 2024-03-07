@@ -9,9 +9,9 @@
             @csrf
             <div class="row mb-3" style="background-color: #f2f2f2; padding: 15px;">
                 <div class="col-md-4">
-                    <label for="nombreTrimestre" class="form-label">Nom del Trimestre</label>
-                    <input type="text" class="form-control @error('nombreTrimestre') is-invalid @enderror" id="nombreTrimestre" name="nombreTrimestre" placeholder="Trimestre" value="{{ old('nombreTrimestre') }}" required>
-                    @error('nombreTrimestre')
+                    <label for="nomTrimestre" class="form-label">Nom del Trimestre</label>
+                    <input type="text" class="form-control @error('nomTrimestre') is-invalid @enderror" id="nomTrimestre" name="nomTrimestre" placeholder="Trimestre" value="{{ old('nomTrimestre') }}" required>
+                    @error('nomTrimestre')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
