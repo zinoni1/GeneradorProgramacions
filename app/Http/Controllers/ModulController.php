@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Modul;
 use Illuminate\Http\Request;
-use App\Models\Curs;
+use App\Models\Cicle;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller;
 
@@ -21,33 +21,40 @@ class ModulController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($cursId)
+    public function create($cicleId)
     {
-        $curs = Curs::find($cursId);
+        $cicle = Cicle::find($cicleId); // Obtener el curso por su ID
         if (Auth::check() && Auth::user()->name === 'admin') {
-            return view('formModul')->with('curs', $curs);
+            // Si cumple con los criterios de autorización, mostrar la vista 'formulari' con la variable $curs
+            return view('formModul', ['cicle' => $cicle]);
         } else {
+            // Si no cumple con los criterios, redireccionar a una página de error
             return view('error');
         }
     }
     
-
-
-    public function store(Request $request,$cicleId)
-    {
-  
     
+
+
+    public function store(Request $request, $cicleId)
+    {
         // Crear una nueva instancia del modelo Modul
         $modul = new Modul();
         $modul->nom = $request->input('nombreModul');
         $modul->cicle_id = $cicleId; // Asignar el cicle_id del formulario
         $modul->save(); // Guardar el modul en la base de datos
     
-    
+        // Verificar si el módulo tiene un ciclo asociado
+        if ($modul->cicle) {
             // Redireccionar a la página de creación de unidades formativas del curso
-            return redirect()->route('curs.uf.create', ['cur' => $modul->cicle->curs_id]);
-        } 
-
+            return redirect()->route('modul.uf.create', ['modul' => $modul->id]);
+        } else {
+            // Manejar el caso donde el módulo no tiene un ciclo asociado
+            // Por ejemplo, redirigir a una página de error o a una página predeterminada
+            return redirect()->route('error');
+        }
+    } 
+    
     
     
 

@@ -38,8 +38,10 @@ class CicleController extends Controller
     
         // Verificar si el ciclo se guardó correctamente
         if ($cicle->id) {
-            // Redireccionar a la página de creación de módulos
-            return redirect()->route('curs.modul.create', ['cur' => $cursId]); // Cambio aquí
+           // Redireccionar a la página de creación de módulos
+        return redirect()->route('cicle.modul.create', ['cicle' => $cicle->id]);
+
+
         } else {
             // Manejar el caso donde el ciclo no se guardó correctamente
             // Por ejemplo, redirigir a una página de error o a una página predeterminada

@@ -6,7 +6,8 @@
         <h1 class="mb-4">Formulari de creació de programacions</h1>
 
         <!-- Formulari per afegir mòduls -->
-        <form id="modulForm" action="{{ route('curs.modul.store', ['cur' => $curs->id]) }}" method="POST">
+        <form id="modulForm" action="{{ route('cicle.modul.store', ['cicle' => $cicle->id]) }}" method="POST">
+
             
     @csrf
     <div class="row mb-3" style="background-color: #f2f2f2; padding: 15px;">
