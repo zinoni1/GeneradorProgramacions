@@ -25,16 +25,16 @@
             });
             calendar.render();
 
-function updateCalendar(cursoId) {
-
+            function updateCalendar(cursoId) {
     calendar.getEvents().forEach(event => event.remove());
 
     if (!cursoId) {
-        {!! json_encode($cursos) !!}.forEach(curso => {
+        {!! json_encode($cursos) !!}.forEach(evento => {
             calendar.addEvent({
-                title: curso.title,
-                start: curso.start,
-                color: curso.color
+                title: evento.title,
+                start: evento.start,
+                end: evento.end,
+                color: evento.color
             });
         });
         return;
@@ -55,25 +55,60 @@ function updateCalendar(cursoId) {
             color: '#FF5733'
         });
     });
+
+// Filtrar trimestres por curso seleccionado
+trimestres = {!! json_encode($allTrimestres) !!}.filter(trimestre => trimestre.curso_id == cursoId);
+console.log("Trimestres filtrados:", trimestres);
+
+// Agregar trimestres por curso especifico con su ID
+trimestres.forEach(trimestre => {
+    calendar.addEvent({
+        title: trimestre.nom + ' (Inicio)',
+        start: trimestre.data_inici,
+        color: '#0000FF'
+    });
+
+
+    calendar.addEvent({
+        title: trimestre.nom + ' (Fin)',
+        start: trimestre.data_final,
+        color: '#0000FF'
+    });
+});
+
+    //agrega festivos por curso especifico con su id
+    festius = {!! json_encode($allFestius) !!}.filter(festiu => festiu.curs_id == cursoId);
+    //agrega festivos por curso especifico con su id
+festius.forEach(festiu => {
+    calendar.addEvent({
+        title: festiu.nom,
+        start: festiu.data_inici,
+        end: festiu.data_final,
+        color: '#BDECB6',
+    });
+});
+
 }
 
-            document.getElementById('curso_select').addEventListener('change', function() {
-                const selectedCurso = this.value;
 
-                if (selectedCurso !== currentCurso) {
-                    currentCurso = selectedCurso;
-                    updateCalendar(selectedCurso);
-                }
-            });
-        });
+
+document.getElementById('curso_select').addEventListener('change', function() {
+        const selectedCurso = this.value;
+
+        if (selectedCurso !== currentCurso) {
+            currentCurso = selectedCurso;
+            updateCalendar(selectedCurso);
+        }
+    });
+});
     </script>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <select id="curso_select" class="mb-3">
-                        <option value="">Selecciona un curs</option>
+                    <select id="curso_select" class="mb-">
+                        <option value="">Selecciona un curso</option>
                         @foreach($allcursos as $curs)
                             <option value="{{ $curs->id }}">{{ $curs->nom }}</option>
                         @endforeach

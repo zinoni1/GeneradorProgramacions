@@ -109,7 +109,7 @@ Route::get('/dashboard', function () {
 
 
     }
-    return view('dashboard', compact('cursos','allcursos'));
+    return view('dashboard', compact('cursos', 'allcursos', 'allTrimestres', 'allFestius'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
