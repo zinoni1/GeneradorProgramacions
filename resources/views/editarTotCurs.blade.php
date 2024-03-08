@@ -6,7 +6,7 @@
         <div class="col-md-4">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Editar Curs</h5>
+                    <h5 class="mb-0">Editar Curs: {{$curs->nom}}</h5>
                 </div>
                 <div class="card-body">
                     <a href="{{ route('curs.edit', $curs->id) }}" class="btn btn-primary">Editar Curs</a>
@@ -21,7 +21,7 @@
                 <div class="col-md-4">
                     <div class="card shadow">
                         <div class="card-header bg-primary text-white">
-                            <h5 class="mb-0">Editar Trimestre: {{ $trimestre->nombre }}</h5>
+                            <h5 class="mb-0">Editar Trimestre: {{ $trimestre->nom }}</h5>
                         </div>
                         <div class="card-body">
                             <a href="{{ route('curs.trimestre.edit', ['cur' => $curs->id, 'trimestre' => $trimestre->id]) }}" class="btn btn-primary">Editar Trimestre</a>
@@ -40,7 +40,7 @@
                 <div class="col-md-4">
                     <div class="card shadow">
                         <div class="card-header bg-primary text-white">
-                            <h5 class="mb-0">Editar Festiu: {{ $festivo->nombre }}</h5>
+                            <h5 class="mb-0">Editar Festiu: {{ $festivo->nom }}</h5>
                         </div>
                         <div class="card-body">
                             <a href="{{ route('curs.festiu.edit', ['cur' => $curs->id, 'festiu' => $festivo->id]) }}" class="btn btn-primary">Editar Festiu</a>

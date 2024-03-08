@@ -49,8 +49,14 @@ Route::get('curs/{id}', 'CursController@show')->name('curs.show');
 Route::delete('curs/{id}', 'CursController@destroy')->name('curs.destroy');
 Route::put('curs/{id}', 'CursController@update')->name('curs.update');
 Route::get('curs/{id}/editTot', [CursController::class, 'editTot'])->name('curs.editTot');
+Route::get('curs/{id}/showCicles', [CursController::class, 'showCicles'])->name('curs.showCicles');
 Route::put('curs/{id}/trimestre/{trimestre_id}', [TrimestreController::class, 'update'])->name('trimestre.update');
 Route::put('curs/{id}/festiu/{festiu_id}', [FestiuController::class, 'update'])->name('festiu.update');
+Route::get('curs/{curs}/cicle/{cicle}/modul/{modul}', [ModulController::class, 'show'])->name('curs.cicle.modul.show');
+Route::get('curs/{cursId}/cicle/{cicleId}/modulsView', [CicleController::class, 'show'])->name('curs.cicle.show');
+
+
+
 
 
 //ruta calendari
