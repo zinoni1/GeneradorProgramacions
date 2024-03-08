@@ -15,7 +15,8 @@
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Eliminar</button>
                 </form>
-                <a href="{{ route('curs.showCicles', $curs->id) }}" class="btn btn-info">Cicles</a>
+                <a href="{{ route('curs.showCicles', $curs->id) }}" class="btn btn-success">Cicles</a>
+                <a href="{{ route('curs.index', $curs->id) }}" class="btn btn-info">Tornar</a>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>

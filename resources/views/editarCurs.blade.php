@@ -27,6 +27,12 @@
     <!-- Botó d'enviament per al curs -->
     <button type="submit" class="btn btn-primary mb-3">Actualitzar Curs</button>
 </form>
-
+    <div class="row">
+        <div class="col-md-3">
+                <div class="card-body mt-2">
+                    <a href="{{ route('curs.editTot', $curs->id) }}" class="btn btn-danger">Tornar</a>
+                </div>
+        </div>
+    </div>
     </div>
 @endsection

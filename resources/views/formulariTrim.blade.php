@@ -39,7 +39,6 @@
         <!-- Botón de envío para añadir trimestre -->
         <button type="submit" class="btn btn-secondary mb-3">Afegir Trimestre</button>
     </form>
-
     <!-- Aquí puedes mostrar los trimestres creados debajo del formulario de cursos -->
     <div class="festivo-content mt-4" style="background-color: #f7f7f7; padding: 15px;">
         <h2>Trimestres del curs actual</h2>

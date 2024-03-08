@@ -109,8 +109,9 @@ Route::get('/dashboard', function () {
 
 
     }
-    return view('dashboard', compact('cursos'));
+    return view('dashboard', compact('cursos','allcursos'));
 })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 
 Route::middleware('auth')->group(function () {
