@@ -24,10 +24,10 @@ class NumDiesController extends Controller
     public function create($cicleId)
     {
         $cicle = Cicle::findOrFail($cicleId);
-        $relatedCicles = Cicle::where('id', '=', $cicleId)->get(); // Obtener los ciclos que no sean el actual
-        return view('formProfe')->with(['cicle' => $cicle, 'cicles' => $relatedCicles]);
+        $moduls = $cicle->moduls; // Obtener los módulos asociados con el ciclo
+        $relatedCicles = Cicle::where('id', '=', $cicleId)->get();
+        return view('formProfe')->with(['cicle' => $cicle, 'cicles' => $relatedCicles, 'moduls' => $moduls]);
     }
-    
     
     
     
@@ -39,21 +39,24 @@ class NumDiesController extends Controller
         // Validar los datos del formulario
         $request->validate([
             'cicle_id' => 'required|exists:cicles,id',
+            'modul_id' => 'required|exists:moduls,id',
             'dia' => 'required|string',
             'horas' => 'required|numeric',
         ]);
-
-        // Crear y almacenar la asignación de horas del módulo
+        
+        // Crear y almacenar la asignación de días del módulo
         $asignacion = new NumDies();
         $asignacion->cicle_id = $request->input('cicle_id');
+        $asignacion->modul_id = $request->input('modul_id');
         $asignacion->dia = $request->input('dia');
         $asignacion->num_sessio = $request->input('horas');
         $asignacion->save();
-
+        
         // Redireccionar a donde desees después de guardar la asignación
         return redirect()->route('dashboard');
-
+    
     }
+    
     
 
     /**

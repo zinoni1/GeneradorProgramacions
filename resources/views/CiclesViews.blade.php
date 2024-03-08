@@ -27,7 +27,7 @@
     <div class="row">
         <div class="col-md-4">
                 <div class="card-body">
-                    <a href="{{ route('cicle.modul.create', $curs->id) }}" class="btn btn-success">Crear Cicle</a>
+                    <a href="{{ route('curs.cicle.create', $curs->id) }}" class="btn btn-success">Crear Cicle</a>
                 </div>
         </div>
     </div>
