@@ -3,50 +3,66 @@
 namespace App\Exports;
 
 use App\Models\Curs;
-use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class CursExport implements FromCollection, WithHeadings
 {
-    /**
-     * @return \Illuminate\Support\Collection
-     */
     public function collection()
     {
-        // Obtener los cursos y mapearlos para incluir también la información de Trimestre y Festiu
-        return Curs::with('trimestre', 'festiu')->get()->map(function ($curs) {
-            $trimestres = $curs->trimestre->map(function ($trimestre) {
-                return [
-                    'Curs: ' . $trimestre->nom,
-                    $trimestre->data_inici,
-                    $trimestre->data_final,
+        // Obtener todos los cursos con sus festivos asociados
+        $cursos = Curs::with('festiu')->get();
+
+        // Preparar los datos para la exportación
+        $data = [];
+
+        // Iterar sobre cada curso
+        foreach ($cursos as $curso) {
+            // Obtener los festivos asociados al curso
+            $festivos = $curso->festiu;
+
+            // Iterar sobre los festivos y añadir una fila por cada uno
+            foreach ($festivos as $festiu) {
+                // Añadir una fila para cada festivo
+                $data[] = [
+                    'NomCurs' => $curso->nom,
+                    'DataIniciCurs' => $curso->data_inici,
+                    'DataFinalCurs' => $curso->data_final,
+                    'NomFestiu' => $festiu->nom,
+                    'DataIniciFestiu' => $festiu->data_inici,
+                    'DataFinalFestiu' => $festiu->data_final,
+                    'TipusFestiu' => $festiu->tipus,
                 ];
-            });
-            $festius = $curs->festiu->map(function ($festiu) {
-                return [
-                    'Festiu: ' . $festiu->nom,
-                    $festiu->data_inici,
-                    $festiu->data_final,
-                    $festiu->tipus,
+            }
+
+            // Si no hay festivos asociados, añadir una fila solo para el curso
+            if ($festivos->isEmpty()) {
+                $data[] = [
+                    'NomCurs' => $curso->nom,
+                    'DataIniciCurs' => $curso->data_inici,
+                    'DataFinalCurs' => $curso->data_final,
+                    'NomFestiu' => '',
+                    'DataIniciFestiu' => '',
+                    'DataFinalFestiu' => '',
+                    'TipusFestiu' => '',
                 ];
-            });
-            return $trimestres->merge($festius);
-        });
+            }
+        }
+
+        return collect($data);
     }
 
-    /**
-     * Specify the headings of the exported file.
-     *
-     * @return array
-     */
     public function headings(): array
     {
+        // Definir los encabezados de las columnas
         return [
-            'Tipo',
-            'Data Inici',
-            'Data Final',
-            'Tipus',
+            'NomCurs',
+            'DataIniciCurs',
+            'DataFinalCurs',
+            'NomFestiu',
+            'DataIniciFestiu',
+            'DataFinalFestiu',
+            'TipusFestiu',
         ];
     }
 }

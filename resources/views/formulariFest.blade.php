@@ -5,7 +5,7 @@
 <div class="container mt-4">
     <h1 class="mb-4">Formulari de creació de programacions</h1>
 
-    <!-- Formulari per afegir festius -->
+    <!-- Formulario para añadir festivos -->
     <form action="{{ route('curs.festiu.store', ['cur' => $curs->id]) }}" method="POST">
         @csrf
 
@@ -45,29 +45,35 @@
                 @enderror
             </div>
         </div>
-        <!-- Botó d'enviament per afegir festiu -->
-        <button type="submit" class="btn btn-secondary">Afegir Festiu</button>
-        <a href="{{ route('curs.index') }}" class="btn btn-danger">Sortir</a>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <!-- Botón de envío para añadir festivo -->
+                <button type="submit" class="btn btn-secondary">Afegir Festiu</button>
+                <a href="{{ route('curs.index') }}" class="btn btn-danger">Sortir</a>
+            </div>
+        </div>
     </form>
-</div>
 
-<div class="festivo-content mt-4">
-    <h2>Festius del curs actual</h2>
-    @if($festius->isNotEmpty())
-        <ul>
-            @foreach($festius as $festiu)
-                <li>{{ $festiu->nom }} - Tipus: {{ $festiu->tipus }} - Data d'inici: {{ $festiu->data_inici }} - Data final: {{ $festiu->data_final }}
-                    <form action="{{ route('curs.festiu.destroy', ['cur' => $curs->id, 'festiu' => $festiu->id]) }}" method="POST" style="display: inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                    </form>
-                </li>
-            @endforeach
-        </ul>
-    @else
-        <p>No s'han trobat festius per aquest curs.</p>
-    @endif
+    <!-- Aquí puedes mostrar los festivos creados debajo del formulario -->
+    <div class="festivo-content mt-4" style="background-color: #f7f7f7; padding: 15px;">
+        <h2>Festius del curs actual</h2>
+        @if($festius->isNotEmpty())
+            <div class="list-group">
+                @foreach($festius as $festiu)
+                    <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <span>{{ $festiu->nom }} - Tipus: {{ $festiu->tipus }} - Data d'inici: {{ $festiu->data_inici }} - Data final: {{ $festiu->data_final }}</span>
+                        <form action="{{ route('curs.festiu.destroy', ['cur' => $curs->id, 'festiu' => $festiu->id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <p>No s'han trobat festius per aquest curs.</p>
+        @endif
+    </div>
 </div>
 
 @endsection

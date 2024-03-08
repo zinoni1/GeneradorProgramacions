@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('nom');
-            $table->foreignId('curs_id')->constrained();
+            $table->foreignId('curs_id')
+            ->  references('id')
+            -> on ('curs')
+            -> onDelete('cascade');
         });
     }
 

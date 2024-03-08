@@ -4,6 +4,7 @@
     <div class="container mt-4">
         <h1 class="mb-4">Formulari de creació de programacions</h1>
 
+        <!-- Formulario para añadir UF -->
         <form id="ufForm" action="{{ route('modul.uf.store', ['modul' => $modul->id]) }}" method="POST">
             @csrf
             <div class="row mb-3" style="background-color: #f2f2f2; padding: 15px;">
@@ -20,9 +21,34 @@
                     <input type="number" class="form-control" id="ordre" name="ordre" required>
                 </div>
             </div>
-            <!-- Botó d'enviament per afegir Unitat Formativa -->
-            <button type="submit" class="btn btn-secondary mb-3">Afegir Unitat Formativa</button>
-            <a href="{{ route('cicle.modul.create', ['cicle' => $cicle->id]) }}" class="btn btn-danger">Sortir</a>
+            <!-- Botón de envío para añadir UF -->
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-secondary">Afegir Unitat Formativa</button>
+                    <a href="{{ route('cicle.modul.create', ['cicle' => $cicle->id]) }}" class="btn btn-danger">Sortir</a>
+                </div>
+            </div>
         </form>
+
+        <!-- Mostrar las UF creadas debajo del formulario -->
+        <div class="uf-content mt-4" style="background-color: #f7f7f7; padding: 15px;">
+            <h2>Unitats Formatives creades</h2>
+            @if($modul->ufs->isNotEmpty())
+                <div class="list-group">
+                    @foreach($modul->ufs as $uf)
+                        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <span>{{ $uf->nom }} - Setmanes: {{ $uf->setmanes }} - Ordre: {{ $uf->ordre }}</span>
+                            <form action="{{ route('modul.uf.destroy', ['modul' => $modul->id, 'uf' => $uf->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <p>No s'han trobat Unitats Formatives per aquest mòdul.</p>
+            @endif
+        </div>
     </div>
 @endsection

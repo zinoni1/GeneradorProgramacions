@@ -6,10 +6,13 @@ use App\Models\Curs;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Trimestre;
 use App\Models\Festiu;
 use Excel;
 use App\Exports\CursExport;
+use App\Models\Trimestre;
+use App\Models\Cicle;
+use App\Models\Modul;
+use App\Models\Uf;
 
 
 class CursController extends Controller
@@ -157,11 +160,35 @@ public function create()
      */
     public function destroy($id)
     {
+        // Buscar el curso por su ID
         $curs = Curs::findOrFail($id);
+    
+        // Eliminar todos los trimestres asociados a este curso
+        Trimestre::where('curs_id', $id)->delete();
+    
+        // Eliminar todos los ciclos asociados a este curso
+        Cicle::where('curs_id', $id)->delete();
+    
+        // Eliminar todos los módulos asociados a los ciclos de este curso
+        Modul::whereIn('cicle_id', function($query) use ($id) {
+            $query->select('id')->from('cicles')->where('curs_id', $id);
+        })->delete();
+    
+        // Eliminar todos los ufs asociados a los módulos de los ciclos de este curso
+        Uf::whereIn('modul_id', function($query) use ($id) {
+            $query->select('id')->from('moduls')->whereIn('cicle_id', function($query) use ($id) {
+                $query->select('id')->from('cicles')->where('curs_id', $id);
+            });
+        })->delete();
+    
+        // Eliminar el curso
         $curs->delete();
+    
+        // Redireccionar a la página de calendarios o cualquier otra página deseada
         $cursos = Curs::all();
         return view('calendaris', ['cursos' => $cursos]);
     }
+    
 
 
     public function exportCurs()
