@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class NumDies extends Model
 {
     use HasFactory;
-    protected $fillable = ['dia', 'num_sessio', 'nombre_modul'];
+    protected $fillable = ['dia', 'num_sessio'];
 
-    public function moduls(){
+    public function modul(){
         return $this->belongsTo(Modul::class);
     }
 }
