@@ -7,6 +7,9 @@ use App\Models\Curs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use App\Models\Modul;
+use App\Http\Controllers\CicleController;
+use App\Http\Controllers\ModulController;
 
 class CicleController extends Controller
 {
@@ -27,15 +30,15 @@ class CicleController extends Controller
         $request->validate([
             'ciclo' => 'required|string|max:255', // Ajusta las reglas de validación según tus necesidades
         ]);
-    
+
         // Crear una nueva instancia del modelo Cicle
         $cicle = new Cicle();
         $cicle->nom = $request->input('ciclo'); // Obtener el nombre del ciclo del formularioio
         $cicle->curs_id = $cursId; // Asociar el Cicle con el ID del Curs proporcionado
-    
+
         // Guardar el ciclo en la base de datos
         $cicle->save();
-    
+
         // Verificar si el ciclo se guardó correctamente
         if ($cicle->id) {
            // Redireccionar a la página de creación de módulos
@@ -48,12 +51,12 @@ class CicleController extends Controller
             return redirect()->route('error');
         }
     }
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -69,15 +72,27 @@ class CicleController extends Controller
             return view('error');
         }
     }
-    
- 
+
+
     /**
      * Display the specified resource.
      */
-    public function show(Cicle $cicle)
+    public function show($cursId, $cicleId)
     {
-        //
+        // Obtener el curso con el ID proporcionado
+        $curs = Curs::findOrFail($cursId);
+
+        // Obtener el ciclo con el ID proporcionado
+        $cicle = Cicle::findOrFail($cicleId);
+
+        // Obtener todos los módulos asociados al ciclo obtenido
+        $moduls = Modul::where('cicle_id', $cicleId)->get();
+
+        // Retornar la vista 'modulsView' con los datos necesarios
+        return view('modulsView', compact('curs', 'cicle', 'moduls'));
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
