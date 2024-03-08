@@ -1,12 +1,13 @@
 @extends('master')
 
 @section('content')
-    <div class="py-6"> <!-- Reducir el espacio entre el contenido y el borde superior -->
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8"> <!-- Reducir el ancho máximo del contenedor -->
+    <div class="py-6"> 
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-4 text-gray-900 text-center"> <!-- Reducir el espacio interno y el tamaño del texto -->
-                    <h2 class="text-lg font-bold">{{ $cicle->nom }} - {{ $modul->nom }}</h2> <!-- Reducir el tamaño del encabezado -->
-                    <div id="calendar" class="mt-4"></div> <!-- Agregar un margen superior -->
+                <div class="p-4 text-gray-900 text-center"> 
+                    <h2 class="text-lg font-bold">{{ $cicle->nom }} - {{ $modul->nom }}</h2> 
+                    <div id="calendar" class="mt-4"></div> 
+                    <a href="{{ route('dashboard') }}" class="btn btn-primary float-left mt-4">Tornar al Dashboard</a> 
                 </div>
             </div>
         </div>

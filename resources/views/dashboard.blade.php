@@ -108,7 +108,7 @@ document.getElementById('curso_select').addEventListener('change', function() {
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <select id="curso_select" class="mb-">
-                        <option value="">Selecciona un curso</option>
+                        <option value="">Tots</option>
                         @foreach($allcursos as $curs)
                             <option value="{{ $curs->id }}">{{ $curs->nom }}</option>
                         @endforeach
