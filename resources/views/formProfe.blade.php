@@ -20,6 +20,14 @@
                 </select>
 
             </div>
+            <label for="modul_id" class="form-label">Mòdul</label>
+<select class="form-select" id="modul_id" name="modul_id" required>
+    <option value="">Selecciona un mòdul</option>
+    @foreach($moduls as $modul)
+        <option value="{{ $modul->id }}">{{ $modul->nom }}</option>
+    @endforeach
+</select>
+
             <div class="col-md-4">
                 <label for="dia" class="form-label">Dia de la Setmana</label>
                 <input type="text" class="form-control" id="dia" name="dia" placeholder="Dia de la setmana" required>
