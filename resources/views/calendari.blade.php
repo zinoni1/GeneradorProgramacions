@@ -10,6 +10,7 @@
             <div class="mb-4">
                 <h3 class="mb-3">{{ $curs->nom }}</h3>
                 <a href="{{ route('curs.editTot', $curs->id) }}" class="btn btn-warning">Editar</a>
+                <a href="{{ route('cicle.numdies.create', $curs->id) }}" class="btn btn-primary">Assignació hores moduls</a>
                 <form action="{{ route('curs.destroy', $curs->id) }}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')

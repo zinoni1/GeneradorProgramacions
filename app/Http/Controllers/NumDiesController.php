@@ -24,10 +24,14 @@ class NumDiesController extends Controller
     public function create($cicleId)
     {
         $cicle = Cicle::findOrFail($cicleId);
-        $moduls = $cicle->moduls; // Obtener los módulos asociados con el ciclo
+        $cursId = $cicle->curs_id;
+        $moduls = $cicle->moduls;
         $relatedCicles = Cicle::where('id', '=', $cicleId)->get();
-        return view('formProfe')->with(['cicle' => $cicle, 'cicles' => $relatedCicles, 'moduls' => $moduls]);
+        $modulId = $moduls->first()->id;
+        
+        return view('formProfe')->with(['cicle' => $cicle, 'cicles' => $relatedCicles, 'moduls' => $moduls, 'cicleId' => $cicleId, 'cursId' => $cursId, 'modulId' => $modulId]);
     }
+    
     
     
     
@@ -53,7 +57,7 @@ class NumDiesController extends Controller
         $asignacion->save();
         
         // Redireccionar a donde desees después de guardar la asignación
-        return redirect()->route('dashboard');
+        return redirect()->back();
     
     }
     

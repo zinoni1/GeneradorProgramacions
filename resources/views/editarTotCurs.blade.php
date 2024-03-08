@@ -30,7 +30,11 @@
                 </div>
             @endforeach
         @else
-            <p>No hi ha trimestres disponibles.</p>
+            <div class="col-md-12">
+                <div class="alert alert-info" role="alert">
+                    No hi ha trimestres disponibles.
+                </div>
+            </div>
         @endif
     </div>
 
@@ -49,7 +53,11 @@
                 </div>
             @endforeach
         @else
-            <p>No hi ha festius disponibles.</p>
+            <div class="col-md-12">
+                <div class="alert alert-info" role="alert">
+                    No hi ha festius disponibles.
+                </div>
+            </div>
         @endif
     </div>
 </div>
@@ -57,12 +65,12 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-4">
-                <div class="card-body">
-                    <a href="{{ route('curs.festiu.create', $curs->id) }}" class="btn btn-success">Crear Festiu</a>
-                </div>
-                <div class="card-body mt-2">
-                    <a href="{{ route('curs.show', $curs->id) }}" class="btn btn-danger">Tornar</a>
-                </div>
+            <div class="card-body">
+                <a href="{{ route('curs.festiu.create', $curs->id) }}" class="btn btn-success">Crear Festiu</a>
+            </div>
+            <div class="card-body mt-2">
+                <a href="{{ route('curs.show', $curs->id) }}" class="btn btn-danger">Tornar</a>
+            </div>
         </div>
     </div>
 </div>
