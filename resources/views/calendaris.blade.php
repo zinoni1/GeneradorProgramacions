@@ -31,7 +31,11 @@
 
             </div>
             @endforeach
+            <div class="card-body mt-2">
+        <a href="{{ route('dashboard') }}" class="btn btn-danger">Tornar</a>
+    </div>
         </div>
     </div>
+
 </div>
 @endsection

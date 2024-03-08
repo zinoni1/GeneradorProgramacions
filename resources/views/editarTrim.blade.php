@@ -29,6 +29,14 @@
             <!-- Botó d'enviament per desar els canvis en els trimestres -->
             <button type="submit" class="btn btn-secondary mb-3">Guardar Canvis</button>
         </form>
+        <div class="row">
+        <div class="col-md-3">
+                <div class="card-body mt-2">
+                    <a href="{{ route('curs.editTot', $curs->id) }}" class="btn btn-danger">Tornar</a>
+                </div>
+        </div>
+    </div>
+    </div>
     </div>
 
 @endsection

@@ -38,6 +38,14 @@
         <!-- Botó d'enviament per al curs -->
         <button type="submit" class="btn btn-primary mb-3">Crear Curs</button>
     </form>
+    <div class="row">
+        <div class="col-md-3">
+                <div class="card-body mt-2">
+                    <a href="{{ route('dashboard') }}" class="btn btn-danger">Tornar</a>
+                </div>
+        </div>
+    </div>
+    </div>
 </div>
 
 

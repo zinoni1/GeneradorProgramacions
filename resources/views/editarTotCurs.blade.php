@@ -60,6 +60,10 @@
                 <div class="card-body">
                     <a href="{{ route('curs.festiu.create', $curs->id) }}" class="btn btn-success">Crear Festiu</a>
                 </div>
+                <div class="card-body mt-2">
+                    <a href="{{ route('curs.show', $curs->id) }}" class="btn btn-danger">Tornar</a>
+                </div>
         </div>
     </div>
+</div>
 @endsection
