@@ -10,6 +10,8 @@ use App\Models\Trimestre;
 use App\Models\Festiu;
 use Excel;
 use App\Exports\CursExport;
+use App\Models\Cicle;
+use App\Models\Modul;
 
 
 class CursController extends Controller
@@ -36,27 +38,27 @@ class CursController extends Controller
             'data_inici.after_or_equal' => 'La data d\'inici del curs ha de ser a partir de l\'any 2020.',
             'data_final.after' => 'La data final ha de ser posterior a la data d\'inici del curs.',
         ]);
-        
+
         // Verificar si el campo 'nom' está presente en la solicitud
         if ($request->has('nom')) {
             $curs = new Curs(); // Crear una nueva instancia del modelo Curs
-        
+
             // Asignar los valores recibidos del formulario
             $curs->nom = $request->input('nom');
             $curs->data_inici = $request->input('data_inici');
             $curs->data_final = $request->input('data_final');
-        
+
             // Guardar el curso en la base de datos
             $curs->save();
         }
-        
+
         return redirect()->route('curs.trimestre.create', ['cur' => $curs->id])
                          ->withInput($request->except('nom'));
     }
-    
-    
-    
-    
+
+
+
+
 
 /**
      * Show the form for creating a new resource.
@@ -116,6 +118,19 @@ public function create()
         // Retornar la vista 'editarTotCurs' con los datos necesarios
         return view('editarTotCurs')->with('curs', $curs)->with('trimestres', $trimestres)->with('festivos', $festivos);
     }
+    public function showCicles($id)
+    {
+        // Obtener el curso con el ID proporcionado
+        $curs = Curs::findOrFail($id);
+
+        // Obtener todos los ciclos asociados al curso con el ID proporcionado
+        $cicles = Cicle::where('curs_id', $id)->get(['id']);
+
+        // Retornar la vista 'modulsView' con los datos necesarios
+        return view('CiclesViews', compact('curs', 'cicles'));
+    }
+
+
 
 
 
